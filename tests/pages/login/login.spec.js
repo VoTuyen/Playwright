@@ -1,9 +1,8 @@
-//const { test, expect } = require('@playwright/test');
+const { test as base, expect } = require('@playwright/test');
 import endpoints from '../../data/apiEndpoints.js';
 import { createLoginData } from '../../fixtures/loginFixture.js';
 import testCases from '../../data/loginData.js';
-import { test } from '../../fixtures/loginFixture.js';
-
+import { test } from '@playwright/test';
 
 
 testCases.forEach(({ phone, client_id, type, expectedSuccess }, index) => {
