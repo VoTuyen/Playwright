@@ -40,10 +40,18 @@ testCases.forEach(({ phone, client_id, type, expectedSuccess }, index) => {
 
 
 testCases.forEach(({ phone, client_id, type, expectedSuccess}, index) => {
-    baseTest(`Send OTP - Test Case ${index + 1}`, async ({ request, headers, authToken }) => {
+    baseTest(`Send OTP - Test Case ${index + 1}`, async ({ request, headers}) => {
+         const response1 = await request.post(endpoints.validate_user, {
+            headers,
+            data: createLoginData(phone, client_id, type)
+        });
+
+        const responseBody1 = await response.json();
+        const authToken = responseBody1.data.verify_token;
+
         const response = await request.post(endpoints.send_otp, {
             headers,
-            data: send_otp(phone, client_id, type, verify_token)            
+            data: send_otp(phone, client_id, type, authToken)            
         });
         const responseBody = await response.json();
         console.log(responseBody);

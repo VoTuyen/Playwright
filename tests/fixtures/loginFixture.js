@@ -1,4 +1,5 @@
-import { test as base, expect } from '@playwright/test';
+import { test as base, expect, request } from '@playwright/test';
+import endpoints from '../data/apiEndpoints.js';
 
 export function createLoginData(phone, client_id, type) {
     return {
