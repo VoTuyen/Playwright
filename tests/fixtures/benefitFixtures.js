@@ -1,19 +1,22 @@
-<<<<<<< HEAD
-export  function headers_benefit(token) {
-        const headers = {
-            "Authorization": token,
-            "X-DID": "06B1C6E5B0C26B4A"
-        };
-        return headers;
-    }
+import endpoints from "../data/apiEndpoints";
 
-=======
-export  function headers_benefit(token) {
-        const headers = {
-            "Authorization": token,
-            "X-DID": "06B1C6E5B0C26B4A"
-        };
-        return headers;
-    }
+export async function fetch_user_benefit(request, authToken, headers) {
+    const response = await request.get(endpoints.fetch_user_benefit, {
+        headers
+    })
+    return response.json()
+}
 
->>>>>>> b7b891316aad36368088a492266bbc36b8537a7a
+
+export const test = base.extend({
+    async headers_with_token({}, use) {
+        const header = {
+            'X-DID': '10:39:4E:A8:85:32',
+            'Authorization': token
+        };
+
+        await use(header); // Sử dụng fixture
+    }
+});
+
+export { expect };

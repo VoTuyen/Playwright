@@ -1,22 +1,59 @@
 import { test as base, expect, request } from '@playwright/test';
 import endpoints from '../data/apiEndpoints.js';
 
-export function createLoginData(phone, client_id, type) {
-    return {
-        phone,  
-        client_id,
-        type
-    };
+export async function validate_user(request, phone, client_id, type, headers) {
+    const response = await request.post(endpoints.validate_user, {
+        data: {
+            phone,  
+            client_id,
+            type
+        }, 
+        headers,
+    });
+    return await response.json();  //data được trả ra ở dạng json()
 }
 
-export function send_otp(phone, client_id, type, verify_token) {
-    return {
-        phone,
-        client_id,
-        type_otp: type,
-        verify_token
-    };
+export async function send_otp(request, phone, client_id, type, verify_token, headers) {
+    const response = await request.post(endpoints.send_otp, {
+        data: {
+            phone,
+            client_id,
+            type_otp: type,
+            verify_token
+        }, 
+        headers,
+    });
+    return await response.json();     
 }
+
+export async function verify_OTP(request, phone, client_id, type, otp_code, headers) {
+    const response = await request.post(endpoints.verify_otp, {
+        data: {
+            phone,
+            client_id,
+            type_otp: type,
+            otp_code
+        }, 
+        headers,
+    })
+    return await response.json()
+}
+
+export async function login(request, phone, client_id, verify_token, headers) {
+    const response = await request.post(endpoints.login, {
+        data: {
+            phone,
+            client_id,
+            push_reg_id: '',
+            verify_token: verify_token
+        },
+        headers
+    })
+    return await response.json()
+    
+}
+
+
 
 export const test = base.extend({
     async headers({}, use) {
@@ -27,23 +64,7 @@ export const test = base.extend({
         };
 
         await use(header); // Sử dụng fixture
-    },
-    // async authToken({}, use) {
-    //     let verify_token;
-    //     const response = await request.post(endpoints.validate_user, {
-    //         headers: {
-    //             'X-DID': '10:39:4E:A8:85:32',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         data: createLoginData(phone, client_id, type) // Cung cấp thông tin cần thiết
-    //     });
-            
-    //     const responseBody = await response.json();
-    //     verify_token = responseBody.data.verify_token; // Lưu token
-
-
-    // await use(verify_token); // Xuất token để sử dụng
-    // }
+    }
 });
 
 //export const expect = base.expect;
