@@ -1,4 +1,4 @@
-import { test as base, expect, request } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import endpoints from '../data/apiEndpoints.js';
 
 export async function validate_user(request, phone, client_id, type, headers) {
@@ -51,6 +51,17 @@ export async function login(request, phone, client_id, verify_token, headers) {
     })
     return await response.json()
     
+}
+
+export async function get_benefitUser(request, authToken) {
+
+    const response = await request.get(endpoints.fetch_user_benefit, {
+        headers: {
+            'X-DID': '10:39:4E:A8:85:32',
+            'Authorization': authToken
+        }
+    })
+    return response.json
 }
 
 

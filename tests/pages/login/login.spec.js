@@ -1,4 +1,4 @@
-import {send_otp, fetchUserInfo, validate_user, verify_OTP, login} from '../../fixtures/loginFixture.js';
+import {send_otp, validate_user, verify_OTP, login} from '../../fixtures/loginFixture.js';
 import dataLogins from '../../data/loginData.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js';
 
