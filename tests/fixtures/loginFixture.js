@@ -57,11 +57,11 @@ export async function get_benefitUser(request, authToken) {
 
     const response = await request.get(endpoints.fetch_user_benefit, {
         headers: {
-            'X-DID': '10:39:4E:A8:85:32',
+            //'X-DID': '10:39:4E:A8:85:32',
             'Authorization': authToken
         }
     })
-    return response.json
+    return await response.json()
 }
 
 
@@ -77,6 +77,10 @@ export const test = base.extend({
         await use(header); // Sử dụng fixture
     }
 });
+
+export const bearerToken = {
+    authToken: null,
+}
 
 //export const expect = base.expect;
 export { expect };

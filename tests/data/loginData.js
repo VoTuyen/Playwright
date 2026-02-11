@@ -5,16 +5,15 @@ const dataLogins = [
         client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
         type: 'login_fpl',
         otp_code: '999999',
-        expectedStatus: '1',
-        expectedMsg: "Success"
+        benefit_phone: 'SGH796959',
+        platform: '_w'
     },
     {
         phone: '0565123451',
         client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
         type: 'login_fpl',
         otp_code: '999999',
-        expectedStatus: '0',
-        expectedMsg: "Failure" 
+        benefit_phone: '056***3451'
     },
     
 ];
