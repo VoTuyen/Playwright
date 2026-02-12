@@ -3,7 +3,7 @@ import dataLogins from '../../data/loginData.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
 
-dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone }, index) => {
+dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform }, index) => {
 
 
     baseTest.describe(`Benefit:`, () => {
@@ -13,12 +13,12 @@ dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone }, index) 
         }
         
         baseTest.beforeEach(async ({request, headers}) => {
-            bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers)
+            bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers, platform)
         })
 
         baseTest(`Get benefit of numberphone ${phone}`, async({request}) => {
             //console.log(bearerToken.authToken)
-            const response = await get_benefitUser(request, bearerToken.authToken)
+            const response = await get_benefitUser(request, bearerToken.authToken, platform)
             console.log(response)
             expect(response.msg_code).toEqual('success')
             expect(response.msg_content).toEqual('thành công')

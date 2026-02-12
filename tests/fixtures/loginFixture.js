@@ -1,8 +1,9 @@
 import { test as base, expect } from '@playwright/test';
 import endpoints from '../data/apiEndpoints.js';
 
-export async function validate_user(request, phone, client_id, type, headers) {
-    const response = await request.post(endpoints.validate_user, {
+
+export async function validate_user(request, phone, client_id, type, headers, platform) {
+    const response = await request.post(endpoints[platform].validate_user, {
         data: {
             phone,  
             client_id,
@@ -13,8 +14,8 @@ export async function validate_user(request, phone, client_id, type, headers) {
     return await response.json();  //data được trả ra ở dạng json()
 }
 
-export async function send_otp(request, phone, client_id, type, verify_token, headers) {
-    const response = await request.post(endpoints.send_otp, {
+export async function send_otp(request, phone, client_id, type, verify_token, headers, platform) {
+    const response = await request.post(endpoints[platform].send_otp, {
         data: {
             phone,
             client_id,
@@ -26,8 +27,8 @@ export async function send_otp(request, phone, client_id, type, verify_token, he
     return await response.json();     
 }
 
-export async function verify_OTP(request, phone, client_id, type, otp_code, headers) {
-    const response = await request.post(endpoints.verify_otp, {
+export async function verify_OTP(request, phone, client_id, type, otp_code, headers, platform) {
+    const response = await request.post(endpoints[platform].verify_otp, {
         data: {
             phone,
             client_id,
@@ -39,8 +40,8 @@ export async function verify_OTP(request, phone, client_id, type, otp_code, head
     return await response.json()
 }
 
-export async function login(request, phone, client_id, verify_token, headers) {
-    const response = await request.post(endpoints.login, {
+export async function login(request, phone, client_id, verify_token, headers, platform) {
+    const response = await request.post(endpoints[platform].login, {
         data: {
             phone,
             client_id,
@@ -53,9 +54,9 @@ export async function login(request, phone, client_id, verify_token, headers) {
     
 }
 
-export async function get_benefitUser(request, authToken) {
+export async function get_benefitUser(request, authToken, platform) {
 
-    const response = await request.get(endpoints.fetch_user_benefit, {
+    const response = await request.get(endpoints[platform].fetch_user_benefit, {
         headers: {
             //'X-DID': '10:39:4E:A8:85:32',
             'Authorization': authToken
