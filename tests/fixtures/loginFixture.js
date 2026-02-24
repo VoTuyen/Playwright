@@ -54,16 +54,16 @@ export async function login(request, phone, client_id, verify_token, headers, pl
     
 }
 
-export async function get_benefitUser(request, authToken, platform) {
+// export async function get_benefitUser(request, authToken, platform) {
 
-    const response = await request.get(endpoints[platform].fetch_user_benefit, {
-        headers: {
-            //'X-DID': '10:39:4E:A8:85:32',
-            'Authorization': authToken
-        }
-    })
-    return await response.json()
-}
+//     const response = await request.get(endpoints[platform].fetch_user_benefit, {
+//         headers: {
+//             //'X-DID': '10:39:4E:A8:85:32',
+//             'Authorization': authToken
+//         }
+//     })
+//     return await response.json()
+// }
 
 
 
