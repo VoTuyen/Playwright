@@ -1,4 +1,4 @@
-import {send_otp, validate_user, verify_OTP, login} from '../../fixtures/loginFixture.js';
+import {send_otp, validate_user, verify_OTP, login, device_limit_list, device_remove} from '../../fixtures/loginFixture.js';
 import dataLogins from '../../data/loginData.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js';
 
@@ -78,12 +78,29 @@ dataLogins.forEach(({ phone, client_id, type, otp_code , platform}, index) => {
 
         //Testcase 4: Login sucess
         baseTest(`Login sucess ${phone}`, async ({request, headers}) => {
-            const response_login = await login (request, phone, client_id, verify_token_otp, headers, platform)
-            expect(response_login.status).toEqual('1')
-            expect(response_login.error_code).toEqual('0')
-            expect(response_login.msg).toEqual('Đăng nhập thành công')
-            expect(response_login.data.access_token_type).toEqual('Bearer')
-            expect(response_login.data.access_token).toBeDefined()
+            const response_login = await login(request, phone, client_id, verify_token_otp, headers, platform)
+            if (response_login.error_code == 7){
+                const verify_token_device_limit_list = response_login.data.verify_token;
+    
+                const response_device_limit_list = await device_limit_list(request, verify_token_device_limit_list, headers, platform);
+                const device_id = response_device_limit_list.data.devices[0].id;
+                
+                const verify_token_remove_device = response_device_limit_list.data.verify_token;
+    
+                const response_device_remove = await device_remove(request, device_id, verify_token_remove_device, headers, platform);
+                expect(response_device_remove.status).toEqual('1')
+                expect(response_device_remove.error_code).toEqual('0')
+                //expect(response_device_remove.msg).toEqual('Đăng nhập thành công')
+                expect(response_device_remove.data.access_token_type).toEqual('Bearer')
+                expect(response_device_remove.data.access_token).toBeDefined()
+
+            } else {
+                expect(response_login.status).toEqual('1')
+                expect(response_login.error_code).toEqual('0')
+                expect(response_login.msg).toEqual('Đăng nhập thành công')
+                expect(response_login.data.access_token_type).toEqual('Bearer')
+                expect(response_login.data.access_token).toBeDefined()
+            }
         })
     });
 });
