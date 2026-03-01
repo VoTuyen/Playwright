@@ -54,6 +54,28 @@ export async function login(request, phone, client_id, verify_token, headers, pl
     
 }
 
+export async function device_limit_list(request, verify_token_device_limit_list, headers, platform) {
+    const response = await request.post(endpoints[platform].device_limit_list, {
+        data: {
+            verify_token: verify_token_device_limit_list
+        },
+        headers,
+    })
+    return await response.json()
+}
+
+export async function device_remove(request, device_id, verify_token_device_remove, headers, platform) {
+    const response = await request.post(endpoints[platform].device_remove, {
+        data: {
+            list_ids: [device_id],
+            verify_token: verify_token_device_remove
+        },
+        headers
+    })
+    return await response.json()
+   
+}
+
 // export async function get_benefitUser(request, authToken, platform) {
 
 //     const response = await request.get(endpoints[platform].fetch_user_benefit, {

@@ -10,6 +10,8 @@ const endpoints = dataLogins.reduce((acc, {platform})=> {
             send_otp: `${API_BASE_URL}${platform}/account/otp/send`,
             verify_otp: `${API_BASE_URL}${platform}/account/otp/verify`,
             login: `${API_BASE_URL}${platform}/account/user/login`,
+            device_limit_list: `${API_BASE_URL}${platform}/account/device/limit_list`,
+            device_remove: `${API_BASE_URL}${platform}/account/device/remove`,
             package: `${API_BASE_URL}${platform}/paymentgw/packages`
         }
     }
