@@ -36,6 +36,7 @@ dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform 
                 console.log('Response is valid according to the schema.');
             }
             expect(true).toBe(result.ok) // Kiểm tra xem response có hợp lệ theo schema hay không
+            //thêm command
 
         })
     });   
