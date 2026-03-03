@@ -1,22 +1,27 @@
-// validateResponse.js
+// Import AJV
 import Ajv from 'ajv';
-import { responseSchema } from '../data/package_screen_schema';
+import { benefit_schema } from './payment_schema.js';
 
-const ajv = new Ajv({ allErrors: true, strict: false });
+ 
+// Khởi tạo AJV
+const ajv = new Ajv();
+ajv.addSchema(benefit_schema, 'benefit_schema'); // Đăng ký schema với tên 'benefit_schema'
 
-export function validateResponse(data) {
-  if (!responseSchema || typeof responseSchema !== 'object') {
-    throw new Error('Invalid responseSchema: must be a non-null object');
-  }
+function validateSchema(data, schemaName) {
+    const validate = ajv.getSchema(schemaName);
 
-  const validate = ajv.compile(responseSchema);
-  const valid = validate(data);
-  if (valid) return { ok: true, data };
+    if (!validate) {
+          throw new Error(`Schema "${schemaName}" không tìm thấy.`);
+      }
 
-  const errors = (validate.errors || []).map((e) => {
-    const path = e.instancePath || "";
-    const field = path.replace(/^\//, "").replace(/\//g, ".");
-    return { field: field || "(unknown)", message: e.message };
-  });
-  return { ok: false, errors };
+
+    const valid = validate(data);
+   
+    if (!valid) {
+        throw new Error(`Validation error: ${JSON.stringify(validate.errors)}`);
+    }
+ 
+    return data; // Trả về dữ liệu đã xác thực
 }
+ 
+module.exports = {validateSchema}

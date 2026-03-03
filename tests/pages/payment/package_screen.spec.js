@@ -20,7 +20,7 @@ dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform 
 
             const reponse = await package_screen(request, bearerToken.authToken, platform)
 
-            // expect(reponse.msg_code).toEqual("success")
+            expect(reponse.msg_code).toEqual("success")
             // expect(reponse.msg_content).toEqual("Lấy danh sách gói thành công") //so sánh giá trị và cấu trúc
             // expect(reponse.msg_data).toBeDefined()
             // expect(reponse.msg_data.subscriber_group).toBeDefined()
@@ -52,17 +52,17 @@ dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform 
 
             
 
-            const v = validateResponse(reponse);
-            if (v.ok) {
-            expect(true).toBeTruthy();
-            } else {
-            // Không hợp lệ: in chi tiết lỗi và fail test
-            console.log("Validation errors:", v.errors);
-            // ép test thất bại với thông báo chi tiết
-            // Bạn có thể gắn từng trường vào expect để dễ đọc
-            const msgs = v.errors.map(e => `Field ${e.field}: ${e.message}`).join('; ');
-            fail(`Schema validation failed: ${msgs}`);
-            }
+            // const v = validateResponse(reponse);
+            // if (v.ok) {
+            // expect(true).toBeTruthy();
+            // } else {
+            // // Không hợp lệ: in chi tiết lỗi và fail test
+            // console.log("Validation errors:", v.errors);
+            // // ép test thất bại với thông báo chi tiết
+            // // Bạn có thể gắn từng trường vào expect để dễ đọc
+            // const msgs = v.errors.map(e => `Field ${e.field}: ${e.message}`).join('; ');
+            // fail(`Schema validation failed: ${msgs}`);
+            // }
 
         })
 

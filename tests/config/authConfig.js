@@ -15,7 +15,7 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
             const verify_token_device_limit_list = response_login.data.verify_token;
 
             const response_device_limit_list = await device_limit_list(request, verify_token_device_limit_list, headers, platform);
-            const device_id = response_device_limit_list.data.devices[0].id;
+            const device_id = response_device_limit_list.data.devices[1].id;
             console.log("Device ID to remove: ", device_id);
             const verify_token_remove_device = response_device_limit_list.data.verify_token;
             console.log("Verify token for device removal: ", verify_token_remove_device);

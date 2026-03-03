@@ -1,7 +1,8 @@
-import { array, object } from "joi";
+import Ajv from 'ajv';
+const ajv = new Ajv();
 
-// schema mẫu: data/response_schema.js
-export const responseSchema = {
+// schema mẫu: 
+export const benefit_schema = {
   type: "object",
   properties: {
     msg_code: { type: "string" },
