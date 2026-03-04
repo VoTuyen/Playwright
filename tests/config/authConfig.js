@@ -16,13 +16,13 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
 
             const response_device_limit_list = await device_limit_list(request, verify_token_device_limit_list, headers, platform);
             const device_id = response_device_limit_list.data.devices[1].id;
-            console.log("Device ID to remove: ", device_id);
+            //console.log("Device ID to remove: ", device_id);
             const verify_token_remove_device = response_device_limit_list.data.verify_token;
-            console.log("Verify token for device removal: ", verify_token_remove_device);
+            //console.log("Verify token for device removal: ", verify_token_remove_device);
 
             const response_device_remove = await device_remove(request, device_id, verify_token_remove_device, headers, platform);
             const access_token = response_device_remove.data.access_token;
-            console.log("Access token after device removal: ", access_token);
+            //console.log("Access token after device removal: ", access_token);
             const access_token_type = response_device_remove.data.access_token_type;
 
             return `${access_token_type} ${access_token}`; 
@@ -37,3 +37,5 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
         throw error; // Ném lỗi ra ngoài nếu có vấn đề
     }   
 }
+
+

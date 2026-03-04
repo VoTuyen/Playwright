@@ -16,6 +16,12 @@ dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform 
             bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers, platform)
         })
 
+        baseTest(`basic test ${index}`, async({request}) => {
+            const reponse = await package_screen(request, null, platform)
+            expect(reponse.msg_code).toEqual("success")
+
+        })
+
         baseTest(`Get info package screen with ${phone}`, async({request}) => {
 
             const reponse = await package_screen(request, bearerToken.authToken, platform)

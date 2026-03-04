@@ -1,4 +1,5 @@
 import dataLogins from "../data/loginData";
+import { create_transaction_by_pmh } from "../fixtures/paymentFixture";
 
 const API_BASE_URL = 'https://api-staging.fptplay.net/api/v7.1';
 
@@ -12,7 +13,9 @@ const endpoints = dataLogins.reduce((acc, {platform})=> {
             login: `${API_BASE_URL}${platform}/account/user/login`,
             device_limit_list: `${API_BASE_URL}${platform}/account/device/limit_list`,
             device_remove: `${API_BASE_URL}${platform}/account/device/remove`,
-            package: `${API_BASE_URL}${platform}/paymentgw/packages`
+            package: `${API_BASE_URL}${platform}/paymentgw/packages`,
+            create_transaction_by_pmh: `${API_BASE_URL}${platform}/paymentgw/payment_hub/create_transaction`,
+            create_transaction_by_FPL: `${API_BASE_URL}${platform}/paymentgw/foxpay/credit/create`
         }
     }
     return acc
