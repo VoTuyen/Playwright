@@ -28,7 +28,7 @@ export async function create_transaction_by_pmh(request, authToken) {  //xem har
     const platform = "_w"
     const response = await request.post(endpoints[platform].create_transaction_by_pmh, {
         data: {
-            number: "5200 0000 0000 2235",
+            number: "5200000000002235",
             cvv: "111",
             month: "12",
             year: "27",
@@ -60,8 +60,21 @@ export async function create_transaction_by_fpl(request, authToken) {  //xem har
             //is_invoice_required: 0
         },
         headers: {
-            'Authorization': authToken
+            'authorization': authToken
         }
     })
+    return await response.json()
+}
+
+export async function check_transaction(request, authToken, platform, trans_id) {  //xem hard platform là box để create transtion cho tiện
+
+    const options = {
+        headers: authToken ? {
+            'Authorization': authToken
+        } : {},
+        qs: { trans_id }
+    } 
+
+    const response = await request.get(endpoints[platform].check_transaction, options)
     return await response.json()
 }
