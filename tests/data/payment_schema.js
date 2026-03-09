@@ -38,13 +38,16 @@ export const check_transaction_schema = {
                title: { type: "string" },
                message: { type: "string" },
             },
-            required: ["export", "title", "message"]
+            required: ["export", "title", "message"],
+            additionalProperties: false
         },
         status_code: { type: "string" }
       },
-      required: ["description", "payment_hub", "info_billing", "status_code"]
+      required: ["description", "payment_hub", "info_billing", "status_code"],
+      additionalProperties: false
     }
   },
-  required: ["msg_code", "msg_content", "msg_data"]
+  required: ["msg_code", "msg_content", "msg_data"],
+  additionalProperties: false
 }
 

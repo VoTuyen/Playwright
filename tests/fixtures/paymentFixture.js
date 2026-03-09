@@ -68,13 +68,21 @@ export async function create_transaction_by_fpl(request, authToken) {  //xem har
 
 export async function check_transaction(request, authToken, platform, trans_id) {  //xem hard platform là box để create transtion cho tiện
 
-    const options = {
-        headers: authToken ? {
-            'Authorization': authToken
-        } : {},
-        qs: { trans_id }
-    } 
+    const url = new URL(endpoints[platform].check_transaction);
+    url.searchParams.append('trans_id', trans_id);
+    console.log('URL for check_transaction:', url.toString()); // In ra URL để debug
 
-    const response = await request.get(endpoints[platform].check_transaction, options)
+    // const options = {
+    //     headers: authToken ? {
+    //         'Authorization': authToken
+    //     } : {},
+    // } 
+
+    //const response = await request.get(url.toString(), options)
+    const response = await request.get(url.toString())
     return await response.json()
+}
+
+export function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
