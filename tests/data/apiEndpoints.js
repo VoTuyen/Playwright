@@ -1,5 +1,5 @@
 import dataLogins from "../data/loginData";
-import { create_transaction_by_pmh } from "../fixtures/paymentFixture";
+import { clear_user_data, create_transaction_by_pmh } from "../fixtures/paymentFixture";
 
 const API_BASE_URL = 'https://api-staging.fptplay.net/api/v7.1';
 
@@ -16,7 +16,9 @@ const endpoints = dataLogins.reduce((acc, {platform})=> {
             package: `${API_BASE_URL}${platform}/paymentgw/packages`,
             create_transaction_by_pmh: `${API_BASE_URL}${platform}/paymentgw/payment_hub/create_transaction`,
             create_transaction_by_fpl: `${API_BASE_URL}${platform}/paymentgw/foxpay/credit/create`,
-            check_transaction: `${API_BASE_URL}${platform}/paymentgw/payment_hub/check_transaction`
+            check_transaction: `${API_BASE_URL}${platform}/paymentgw/payment_hub/check_transaction`,
+            survey: `${API_BASE_URL}${platform}/paymentgw/survey/customer-info`,
+            clear_user_data: `https://staging-api-payment.fptplay.net/api/v1/clear_tester_data`
         }
     }
     return acc

@@ -24,7 +24,7 @@ export async function package_screen(request, authToken, platform) {
     return await response.json()
 } 
 
-export async function create_transaction_by_pmh(request, authToken) {  //xem hard platform là box để create transtion cho tiện
+export async function create_transaction_by_pmh(request, authToken, plan_id) {  //xem hard platform là box để create transtion cho tiện
     const platform = "_w"
     const response = await request.post(endpoints[platform].create_transaction_by_pmh, {
         data: {
@@ -32,10 +32,10 @@ export async function create_transaction_by_pmh(request, authToken) {  //xem har
             cvv: "111",
             month: "12",
             year: "27",
-            plan_id: 6598,
+            plan_id: plan_id,
             payment_gateway_code: "INTERNATIONAL",
             display_mode: "REDIRECT_URL",
-            return_url: "https://dev.fptplay.vn/dich-vu/thanh-toan/foxpay_credit",
+            return_url: "https://web-v2:fptplay%402022@dev.fptplay.vn/dich-vu/thanh-toan/foxpay_credit",
             is_invoice_required: 0
         },
         headers: {
@@ -45,7 +45,7 @@ export async function create_transaction_by_pmh(request, authToken) {  //xem har
     return await response.json()
 }
 
-export async function create_transaction_by_fpl(request, authToken) {  //xem hard platform là box để create transtion cho tiện
+export async function create_transaction_by_fpl(request, authToken, plan_id) {  //xem hard platform là box để create transtion cho tiện
     const platform = "_w"
     const response = await request.post(endpoints[platform].create_transaction_by_fpl, {
         data: {
@@ -53,10 +53,10 @@ export async function create_transaction_by_fpl(request, authToken) {  //xem har
             card_cvv: "111",
             card_expiration_month: "12",
             card_expiration_year: "27",
-            plan_id: 6598,
+            plan_id: plan_id,
             //payment_gateway_code: "INTERNATIONAL",
             //display_mode: "REDIRECT_URL",
-            return_url: "https://dev.fptplay.vn/dich-vu/thanh-toan/foxpay_credit",
+            return_url: "https://web-v2:fptplay%402022@dev.fptplay.vn/dich-vu/thanh-toan/foxpay_credit",
             //is_invoice_required: 0
         },
         headers: {
@@ -80,6 +80,30 @@ export async function check_transaction(request, authToken, platform, trans_id) 
 
     //const response = await request.get(url.toString(), options)
     const response = await request.get(url.toString())
+    return await response.json()
+}
+
+export async function survey(request, authToken, phone) {
+    const platform = "_w"
+    const response = await request.post(endpoints[platform].survey, {
+        headers: {
+            'Authorization': authToken
+        },
+        data: {
+            phone: phone,
+            address: '',
+            is_internet: '1'
+        }
+    })
+    return await response.json()
+}   
+
+export async function clear_user_data(request, phone) {
+    const response = await request.post('https://staging-api-payment.fptplay.net/api/v1/clear_tester_data', {
+        data: {
+            phone: [phone]
+        }
+    })
     return await response.json()
 }
 

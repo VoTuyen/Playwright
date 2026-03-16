@@ -2,15 +2,17 @@ import { send_otp, validate_user, verify_OTP, login, get_benefitUser, bearerToke
 import { purchaseData } from '../../data/loginData.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
-import { package_screen, create_transaction_by_pmh, create_transaction_by_fpl, check_transaction, delay } from '../../fixtures/paymentFixture.js';
+import { package_screen, create_transaction_by_pmh, create_transaction_by_fpl, check_transaction, delay, clear_user_data } from '../../fixtures/paymentFixture.js';
 import { validateSchema } from '../../data/validateResponse.js';
 import { chromium } from 'playwright';
 import { init, close } from '../../fixtures/browserFixture.js';
+const testData = require('../../data/data.json') 
+import { check_transaction_data } from '../../data/paymentData.js';
+import { validate_check_transaction } from '../../data/validate_check_transaction.js';
 
-//kiểm tra kiểu dữ liệu của các field trong response body của API check transaction
-purchaseData.forEach(({phone, client_id, type, otp_code, benefit_phone, platform }, index) => {
+check_transaction_data.forEach(({is_survey, is_PMH, payment_success, plan_id, is_over2h, is_login, expected, id}, index) => {
 
-    baseTest.describe('Check transaction', () => {
+    baseTest.describe('Validate check transaction response', () => {
 
         let page;
         baseTest.beforeAll( async () => {
@@ -18,57 +20,18 @@ purchaseData.forEach(({phone, client_id, type, otp_code, benefit_phone, platform
         })
         baseTest.afterAll(async () => {
             await close();
-        })          
-
-        let bearerToken = {
-            authToken: null,
-        }
+        })
 
         baseTest.beforeEach(async ({request, headers}) => {
-            bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers, platform)
+            bearerToken.authToken = await authenticateUser(request, '0565123452', '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a' , 'login_fpl', '999999', headers, '_w')
         })
 
-        baseTest(`Kiểm tra kiểu dữ liệu của các field trong response body của API check transaction ${index}`, async({request}) => {
+        baseTest(`Testcase ${id}`, async({request}) => {
+
+            const phone = '0565123452';
             
-            const response_create_transation_pmh = await create_transaction_by_pmh(request, bearerToken.authToken)
-            const paymentLink = response_create_transation_pmh.msg_data.value_display
-            await page.goto(paymentLink)
-            await page.waitForTimeout(10000)
-            
-            const trans_id = response_create_transation_pmh.msg_data.trans_id
-
-            await delay(10000)
-
-            const response_check_transaction = await check_transaction(request, bearerToken.authToken, platform, trans_id)
-            console.log('Response from check_transaction API:', response_check_transaction); // In ra response để debug
-            
-            const result = validateSchema(response_check_transaction, 'check_transaction_schema')
-            if (!result.msg_code) {
-                // In ra chi tiết lỗi để dễ debug
-                console.error('Schema validation errors:', result.msg_code);
-            } else {
-                console.log('Response is valid according to the schema.');
-            }
-            expect(result.msg_code).toBe('success')
-        })
-
-        baseTest(`Kiểm tra kiểu giá trị khi user thanh toán bằng PMH nhưng không nhập survey ${index}`, async({request}) => {
-
-            const response_create_transation_pmh = await create_transaction_by_pmh(request, bearerToken.authToken)
-            const paymentLink = response_create_transation_pmh.msg_data.value_display
-            
-            await page.goto(paymentLink)
-            await page.waitForTimeout(10000)
-
-            const trans_id = response_create_transation_pmh.msg_data.trans_id
-
-            await delay(11000)
-
-            const response_check_transaction = await check_transaction(request, bearerToken.authToken, platform, trans_id)
-
-            const actualText = response_check_transaction.msg_data.info_billing.message
-            const expectedText = "Xuất hóa đơn thất bại do quá thời gian hỗ trợ. Giao dịch này sẽ lập hóa đơn khách hàng lẻ theo quy định của FPT và phù hợp với quy định của pháp luật."
-            expect(actualText).toBe(expectedText)
+            const result = await validate_check_transaction(is_survey, is_PMH, payment_success, plan_id, is_over2h, is_login, request, bearerToken.authToken, page, phone)
+            expect(result).toEqual(expected)
         })
     })
 })

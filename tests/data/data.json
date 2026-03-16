@@ -1,0 +1,7 @@
+{
+    "testValues": {
+        "description_billing": "Lưu ý: Quá 2 giờ kể từ thời điểm thanh toán thành công, FPTPlay không hỗ trợ xuất hóa đơn.",
+        "description_KHTN": "Expected Text 2",
+        "description_over2h": "Expected Text 3"
+    }
+}
