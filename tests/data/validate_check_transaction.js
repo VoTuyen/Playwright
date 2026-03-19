@@ -79,12 +79,25 @@ export async function validate_check_transaction(is_survey, is_PMH, payment_succ
         '_w', 
         create_transaction_result.transaction_id);
 
-    return {
-        description : check_transaction_result.msg_data.description,
-        payment_hub: check_transaction_result.msg_data.payment_hub,
-        export: check_transaction_result.msg_data.info_billing.export,
-        title: check_transaction_result.msg_data.info_billing.title,
-        message: check_transaction_result.msg_data.info_billing.message,
-        status_code: check_transaction_result.msg_data.status_code
+    let body = null
+    body = check_transaction_result
+
+    const extracted = {
+        description: body?.msg_data?.description ?? null,
+        payment_hub: body?.msg_data?.payment_hub ?? null,
+        export: body?.msg_data?.info_billing?.export ?? null,
+        title: body?.msg_data?.info_billing?.title ?? null,
+        message: body?.msg_data?.info_billing?.message ?? null,
+        status_code: body?.msg_data?.status_code ?? null,
+    };
+     
+        
+    return { body, extracted 
+        // description : check_transaction_result.msg_data.description,
+        // payment_hub: check_transaction_result.msg_data.payment_hub,
+        // export: check_transaction_result.msg_data.info_billing.export,
+        // title: check_transaction_result.msg_data.info_billing.title,
+        // message: check_transaction_result.msg_data.info_billing.message,
+        // status_code: check_transaction_result.msg_data.status_code,
     }
 }

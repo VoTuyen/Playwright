@@ -17,13 +17,13 @@ purchaseData.forEach(({phone, client_id, type, otp_code, benefit_phone, platform
             bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers, platform)
         })
 
-        baseTest(`mua gói PMH thành công`, async({request}) => {
+        baseTest(`mua gói PMH thành công ${index}`, async({request}) => {
 
             const response = await create_transaction_by_pmh(request, bearerToken.authToken)
             console.log(response.msg_data.trans_id)
         })
 
-        baseTest(`Mua gói FPL thành công`, async({request}) => {
+        baseTest(`Mua gói FPL thành công ${index}`, async({request}) => {
 
             const reponse = await create_transaction_by_fpl(request, bearerToken.authToken)
             console.log(reponse.msg_data.trans_id)

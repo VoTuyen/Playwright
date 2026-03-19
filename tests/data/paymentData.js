@@ -29,10 +29,11 @@ export const check_transaction_data = [
         expected: {
             description: "Lưu ý: Quá 2 giờ kể từ thời điểm thanh toán thành công, FPTPlay không hỗ trợ xuất hóa đơn.",
             payment_hub: true,
+            message: "",
             export: true,
             status_code : "SUCCESS",
             title: "",
-            message: ""
+            
         }
     },
     {

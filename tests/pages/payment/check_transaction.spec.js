@@ -31,7 +31,11 @@ check_transaction_data.forEach(({is_survey, is_PMH, payment_success, plan_id, is
             const phone = '0565123452';
             
             const result = await validate_check_transaction(is_survey, is_PMH, payment_success, plan_id, is_over2h, is_login, request, bearerToken.authToken, page, phone)
-            expect(result).toEqual(expected)
+            const test = validateSchema(result.body, 'check_transaction_schema')
+            expect(test.msg_code).toBe('success')
+            expect(result.extracted).toEqual(expected)
+
+            
         })
     })
 })
