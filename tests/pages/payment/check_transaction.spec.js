@@ -1,12 +1,10 @@
-import { send_otp, validate_user, verify_OTP, login, get_benefitUser, bearerToken } from '../../fixtures/loginFixture.js';
-import { purchaseData } from '../../data/loginData.js';
+import { bearerToken } from '../../fixtures/loginFixture.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
-import { package_screen, create_transaction_by_pmh, create_transaction_by_fpl, check_transaction, delay, clear_user_data } from '../../fixtures/paymentFixture.js';
 import { validateSchema } from '../../data/validateResponse.js';
-import { chromium } from 'playwright';
+//import { chromium } from 'playwright';
 import { init, close } from '../../fixtures/browserFixture.js';
-const testData = require('../../data/data.json') 
+//const testData = require('../../data/data.json') 
 import { check_transaction_data } from '../../data/paymentData.js';
 import { validate_check_transaction } from '../../data/validate_check_transaction.js';
 

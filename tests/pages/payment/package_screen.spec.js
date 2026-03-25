@@ -1,32 +1,47 @@
-import { send_otp, validate_user, verify_OTP, login, get_benefitUser, bearerToken } from '../../fixtures/loginFixture.js';
-import dataLogins from '../../data/loginData.js';
+//import { bearerToken } from '../../fixtures/loginFixture.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
 import { package_screen } from '../../fixtures/paymentFixture.js';
-import { validateResponse } from '../../data/validateResponse.js';
+import { validateSchema } from '../../data/validateResponse.js';
+import {package_screen_data} from '../../data/paymentData.js';
+import {bearerToken} from '../../fixtures/loginFixture.js';
 
-dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform }, index) => {
+//TC1: Validate response structure with nhiều loại tài khoản khác nhau (có token, không token, token hết hạn, tài khoản SA, tài khoản SUB...)
+package_screen_data.forEach(({phone, client_id, platform}, index) => {
 
-    baseTest.describe('Package screen', () => {
+    baseTest.describe('Validate package screen response', () => {
+
         let bearerToken = {
             authToken: null,
         }
         
         baseTest.beforeEach(async ({request, headers}) => {
-            bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers, platform)
+            bearerToken.authToken = await authenticateUser(request, phone, client_id , 'login_fpl', '999999', headers, platform)
+            console.log("Bearer Token:", bearerToken.authToken)
+        })      
+
+        baseTest(`Testcase ${index + 1}:`, async({request}) => {
+
+            const response = await package_screen(request, bearerToken.authToken, platform)
+            const test = validateSchema(response, 'package_screen_schema')
+            console.log(test.msg_data.subscriber_group[0].type)
+            //console.log(test.msg_data.subscriber_group[1].type)
+            expect(test.msg_code).toBe('success')
+            // expect(test.msg_data.subscriber_group[0].type).toBe("fptplay_now")            
+            // expect(test.msg_data.subscriber_group[1].type).toBe("fptplay_home")
+            
         })
+})
+})
+    
 
-        baseTest(`basic test ${index}`, async({request}) => {
-            const reponse = await package_screen(request, null, platform)
-            expect(reponse.msg_code).toEqual("success")
+//TC2: Validate response structure với các platform khác nhau (web, box, mobile)
+//TC3: Validate value của các field quan trọng trong response (msg_code, msg_content, subscriber_group.type, subscriber_group.name, subscriber_group.sub-text, subscriber_group.background, subscriber_group.block_highlight.image, subscriber_group.block_highlight.background, subscriber_group.block_highlight.inactive_background, subscriber_group.block_highlight.background_image, subscriber_group.block_highlight.color_code, subscriber_group.block_highlight.color_code_web, subscriber_group.block_highlight.background_image_table, subscriber_group.block_highlight.background_image_mobile, subscriber_group.block_highlight.footer_banners, subscriber_group.is_focus, subscriber_group.is_app_review, subscriber_group.packages_list.package_name.text...)
+//TC4: Validate logic của 1 số field quy định BE tính 
 
-        })
 
-        baseTest(`Get info package screen with ${phone}`, async({request}) => {
 
-            const reponse = await package_screen(request, bearerToken.authToken, platform)
-
-            expect(reponse.msg_code).toEqual("success")
+            //expect(reponse.msg_code).toEqual("success")
             // expect(reponse.msg_content).toEqual("Lấy danh sách gói thành công") //so sánh giá trị và cấu trúc
             // expect(reponse.msg_data).toBeDefined()
             // expect(reponse.msg_data.subscriber_group).toBeDefined()
@@ -55,22 +70,3 @@ dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform 
             // expect(reponse.msg_data.subscriber_group[0].packages_list[0].is_promotion).toBeDefined()
             // expect(reponse.msg_data.subscriber_group[0].packages_list[0].block_highlight).toBeDefined()
             // expect(reponse.msg_data.subscriber_group[0].packages_list[0].block_highlight.image_url).toBeDefined()
-
-            
-
-            // const v = validateResponse(reponse);
-            // if (v.ok) {
-            // expect(true).toBeTruthy();
-            // } else {
-            // // Không hợp lệ: in chi tiết lỗi và fail test
-            // console.log("Validation errors:", v.errors);
-            // // ép test thất bại với thông báo chi tiết
-            // // Bạn có thể gắn từng trường vào expect để dễ đọc
-            // const msgs = v.errors.map(e => `Field ${e.field}: ${e.message}`).join('; ');
-            // fail(`Schema validation failed: ${msgs}`);
-            // }
-
-        })
-
-    })
-})

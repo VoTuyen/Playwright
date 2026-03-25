@@ -142,3 +142,21 @@ export const check_transaction_data = [
         }
     },
 ];
+
+export const package_screen_data = [
+    {
+        phone: '0565123452', //tài khoản SA
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_w'
+    },
+    {
+        phone: '0986745978', //tài khoản SUB
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_w'
+    },
+    {
+        phone: '', //không có token
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_w'
+    }
+]
