@@ -1,6 +1,6 @@
 // Import AJV
 import Ajv from 'ajv';
-import { benefit_schema, check_transaction_schema, package_screen_schema } from './payment_schema.js';
+import { benefit_schema, check_transaction_schema, package_screen_schema } from '../schemas/index.js';
 
  
 // Khởi tạo AJV

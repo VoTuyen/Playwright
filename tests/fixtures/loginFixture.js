@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import endpoints from '../data/apiEndpoints.js';
+import endpoints from '../constants/apiEndpoints.js';
 
 
 export async function validate_user(request, phone, client_id, type, headers, platform) {

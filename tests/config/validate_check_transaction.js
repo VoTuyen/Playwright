@@ -1,5 +1,5 @@
 import { create_transaction_by_pmh, create_transaction_by_fpl, survey, clear_user_data } from "../fixtures/paymentFixture.js"
-import { authenticateUser } from "../config/authConfig.js";
+import { authenticateUser } from "./authConfig.js";
 import { check_transaction } from "../fixtures/paymentFixture.js";
 
 async function clearPackage(request, phone) {

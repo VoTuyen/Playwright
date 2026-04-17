@@ -2,7 +2,7 @@ import { get_benefitUser } from '../../fixtures/paymentFixture.js';
 import dataLogins from '../../data/loginData.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
-import { validateSchema } from '../../data/validateResponse.js'; 
+import { validateSchema } from '../../utils/validateResponse.js'; 
 
 
 dataLogins.forEach(({ phone, client_id, type, otp_code, benefit_phone, platform }, index) => {

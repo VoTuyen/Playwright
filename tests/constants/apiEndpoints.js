@@ -14,9 +14,11 @@ const endpoints = dataLogins.reduce((acc, {platform})=> {
             device_limit_list: `${API_BASE_URL}${platform}/account/device/limit_list`,
             device_remove: `${API_BASE_URL}${platform}/account/device/remove`,
             package: `${API_BASE_URL}${platform}/paymentgw/packages`,
+            package_detail: `${API_BASE_URL}${platform}/paymentgw/packages/detail`,
             create_transaction_by_pmh: `${API_BASE_URL}${platform}/paymentgw/payment_hub/create_transaction`,
             create_transaction_by_fpl: `${API_BASE_URL}${platform}/paymentgw/foxpay/credit/create`,
             check_transaction: `${API_BASE_URL}${platform}/paymentgw/payment_hub/check_transaction`,
+            user_subscriptions: `${API_BASE_URL}${platform}/paymentgw/subscription/user_subscriptions`,
             survey: `${API_BASE_URL}${platform}/paymentgw/survey/customer-info`,
             clear_user_data: `https://staging-api-payment.fptplay.net/api/v1/clear_tester_data`
         }

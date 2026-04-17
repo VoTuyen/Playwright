@@ -18,19 +18,19 @@ const dataLogins = [
         benefit_phone: '056***3451',
         platform: '_a'
     },
-    
+
 ];
 
 export default dataLogins
 
 export const purchaseData = [
     {
-        phone: '0565123451',
+        phone: '0565123454',
         client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
         type: 'login_fpl',
         otp_code: '999999',
-        benefit_phone: '056***3451',
-        platform: '_a'
+        benefit_phone: '056***3454',
+        platform: '_w'
     },
     {
         phone: '0565123452',

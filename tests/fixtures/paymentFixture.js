@@ -1,5 +1,4 @@
-
-import endpoints from '../data/apiEndpoints.js';
+import endpoints from '../constants/apiEndpoints.js';
 
 export async function get_benefitUser(request, authToken, platform) {
 
@@ -109,4 +108,39 @@ export async function clear_user_data(request, phone) {
 
 export function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// ─── Subscription helpers ──────────────────────────────────────────────────────
+
+export async function get_package_detail(request, authToken, platform, plan_type) {
+    const url = new URL(endpoints[platform].package_detail);
+    url.searchParams.append('plan_type', plan_type);
+    console.log('[get_package_detail] URL:', url.toString());
+
+    const response = await request.get(url.toString(), {
+        headers: { 'Authorization': authToken }
+    });
+    return await response.json();
+}
+
+export async function get_user_subscriptions(request, authToken, platform) {
+    const response = await request.get(endpoints[platform].user_subscriptions, {
+        headers: { 'Authorization': authToken }
+    });
+    return await response.json();
+}
+
+// Thử mua gói — KHÔNG throw, capture response để assert
+// Block khi: msg_data.type_display === 7
+export async function try_create_transaction(request, authToken, platform, plan_type) {
+    const response = await get_package_detail(request, authToken, platform, plan_type);
+    const isBlocked = response?.msg_data?.type_display === 7;
+    console.log(isBlocked)
+    return {
+        blocked:      isBlocked,
+        type_display: response?.msg_data?.type_display ?? null,
+        plan_id:      response?.msg_data?.plan_id ?? null,
+        payment_link: response?.msg_data?.payment_url ?? null,
+        raw:          response,
+    };
 }

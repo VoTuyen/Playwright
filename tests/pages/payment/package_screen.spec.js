@@ -2,7 +2,7 @@
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
 import { package_screen } from '../../fixtures/paymentFixture.js';
-import { validateSchema } from '../../data/validateResponse.js';
+import { validateSchema } from '../../utils/validateResponse.js';
 import {package_screen_data} from '../../data/paymentData.js';
 import {bearerToken} from '../../fixtures/loginFixture.js';
 

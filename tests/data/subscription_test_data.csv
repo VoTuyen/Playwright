@@ -1,0 +1,13 @@
+id;desc;phone;cur_id;cur_type;cur_name;new_id;new_type;new_name;permission;btn;planId;groupIdx;listIdx;notify
+1;Đang có gói Cine, mua Cine -> Allow, Autopay giữ nguyên Cine;565123455;7802;cine;Gói Cine;7802;cine;Gói Cine;Allow;1;6716;0;1;FALSE
+2;Đang có Gói Cine, mua Gói Premium -> Allow, Autopay đổi Gói Premium;565123455;7802;cine;Gói Cine;6598;premium;Gói Premium;Allow;1;6594;0;0;FALSE
+3;Đang có Gói Cine, mua Gói V.VIP1 -> Allow, Autopay đổi Gói V.VIP1;565123455;7802;cine;Gói Cine;7100;v-vip1;Gói V.VIP1;Allow;1;7104;1;1;FALSE
+4;Đang có Gói Cine, mua Gói V.VIP2 -> Allow, Autopay đổi Gói V.VIP2;565123455;7802;cine;Gói Cine;7120;v-vip2;Gói V.VIP2;Allow;1;7124;1;0;FALSE
+5;Đang có Gói Premium, mua Gói Cine -> Block, Autopay giữ nguyên Gói Premium;565123455;6598;premium;Gói Premium;7802;cine;Gói Cine;Block;2;6594;0;1;FALSE
+6;Đang có Gói Premium, mua Gói Premium -> Allow, Autopay giữ nguyên Gói Premium;565123455;6598;premium;Gói Premium;6598;premium;Gói Premium;Allow;1;6594;0;0;FALSE
+7;Đang có Gói Premium, mua Gói V.VIP1 -> Allow, Autopay đổi Gói V.VIP1;565123455;6598;premium;Gói Premium;7100;v-vip1;Gói V.VIP1;Allow;1;7104;1;1;FALSE
+8;Đang có Gói Premium, mua Gói V.VIP2 -> Allow, Autopay đổi Gói V.VIP2;565123455;6598;premium;Gói Premium;7120;v-vip2;Gói V.VIP2;Allow;1;7124;1;0;FALSE
+9;Đang có Gói V.VIP1, mua Gói Cine -> Block, Autopay giữ nguyên Gói V.VIP1;565123455;7100;v-vip1;Gói V.VIP1;7802;cine;Gói Cine;Block;2;7104;0;1;FALSE
+10;Đang có Gói V.VIP1, mua Gói Premium -> Block, Autopay giữ nguyên Gói V.VIP1;565123455;7100;v-vip1;Gói V.VIP1;6598;premium;Gói Premium;Block;2;7104;0;0;FALSE
+11;Đang có Gói V.VIP1, mua Gói V.VIP1 -> Allow, Autopay giữ nguyên Gói V.VIP1;565123455;7100;v-vip1;Gói V.VIP1;7100;v-vip1;Gói V.VIP1;Allow;1;7104;1;1;FALSE
+12;Đang có Gói V.VIP1, mua Gói V.VIP2 -> Allow, Autopay đổi Gói V.VIP2;565123455;7100;v-vip1;Gói V.VIP1;7120;v-vip2;Gói V.VIP2;Allow;1;7124;1;0;FALSE

@@ -1,12 +1,12 @@
 import { bearerToken } from '../../fixtures/loginFixture.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
-import { validateSchema } from '../../data/validateResponse.js';
+import { validateSchema } from '../../utils/validateResponse.js';
 //import { chromium } from 'playwright';
 import { init, close } from '../../fixtures/browserFixture.js';
 //const testData = require('../../data/data.json') 
 import { check_transaction_data } from '../../data/paymentData.js';
-import { validate_check_transaction } from '../../data/validate_check_transaction.js';
+import { validate_check_transaction } from '../../config/validate_check_transaction.js';
 
 check_transaction_data.forEach(({is_survey, is_PMH, payment_success, plan_id, is_over2h, is_login, expected, id}, index) => {
 
