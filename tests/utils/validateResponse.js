@@ -25,4 +25,4 @@ function validateSchema(data, schemaName) {
     return data; // Trả về dữ liệu đã xác thực
 }
  
-module.exports = {validateSchema}
+export { validateSchema };

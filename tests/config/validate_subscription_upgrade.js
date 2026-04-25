@@ -42,6 +42,8 @@ export async function validate_subscription_upgrade(request, page_null, testCase
     );
     const btnBuyPack = packageDetailRes?.msg_data?.subscriber_group?.[expected.btn_buy_pack_group_index]
         ?.packages_list?.[expected.btn_buy_pack_list_index]?.btn_buy_pack;
+        console.log(`expected nhóm: ${expected.btn_buy_pack_group_index}`)
+        console.log(`expected gói: ${expected.btn_buy_pack_list_index}`)
     console.log('[Step 4] btn_buy_pack của gói B:', btnBuyPack);
 
     // ── Step 5: Thử tạo transaction gói B ─────────────────────────────────────

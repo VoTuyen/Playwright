@@ -163,7 +163,7 @@ export const package_screen_schema = {
         }
       },
       required: ["subscriber_group"],
-      additionalProperties: false
+      additionalProperties: true
     }
   },
   required: ["msg_code", "msg_content", "msg_data"],

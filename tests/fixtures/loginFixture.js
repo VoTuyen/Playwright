@@ -1,4 +1,4 @@
-import { test as base, expect } from '@playwright/test';
+import { test as base, expect as playwrightExpect } from '@playwright/test';
 import endpoints from '../constants/apiEndpoints.js';
 
 
@@ -76,16 +76,16 @@ export async function device_remove(request, device_id, verify_token_device_remo
    
 }
 
-// export async function get_benefitUser(request, authToken, platform) {
+export async function get_benefitUser(request, authToken, platform) {
 
-//     const response = await request.get(endpoints[platform].fetch_user_benefit, {
-//         headers: {
-//             //'X-DID': '10:39:4E:A8:85:32',
-//             'Authorization': authToken
-//         }
-//     })
-//     return await response.json()
-// }
+    const response = await request.get(endpoints[platform].fetch_user_benefit, {
+        headers: {
+            //'X-DID': '10:39:4E:A8:85:32',
+            'Authorization': authToken
+        }
+    })
+    return await response.json()
+}
 
 
 
@@ -105,5 +105,4 @@ export const bearerToken = {
     authToken: null,
 }
 
-//export const expect = base.expect;
-export { expect };
+export const expect = playwrightExpect;

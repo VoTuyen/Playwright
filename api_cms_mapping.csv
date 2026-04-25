@@ -1,0 +1,26 @@
+Entity,API Field,CMS Field,Data Type,Logic/Description
+Subscriber Group,id,G.id,Integer,ID định danh của nhóm gói
+Subscriber Group,type,G.type,String,Mã định danh nhóm (sport; iz_package; ...)
+Subscriber Group,name,G.name,String,Tên hiển thị của nhóm gói
+Subscriber Group,sub-text,G.sub_text,String,Đoạn mô tả ngắn dưới tên nhóm
+Subscriber Group,background,G.config.background,String,Link ảnh nền của nhóm gói
+Subscriber Group,block_highlight.image,G.config.image,String,Logo của nhóm gói
+Subscriber Group,block_highlight.color_code,G.config.color_code,String,Mã màu chủ đạo của nhóm gói
+Package Item,id,P.id,Integer,ID của gói trên dự án CMS
+Package Item,type,P.plan_type,String,Mã loại gói (iz; max; sport; ...)
+Package Item,package_name.text,P.config.config_data[platform].package_name.text,String,Tên hiển thị gói (Lấy theo platform config)
+Package Item,package_name.image_url,P.config.config_data[platform].package_name.image_url,String,Ảnh icon representative của gói
+Package Item,price_display,P.config.config_data[platform].price_display,String,Giá hiển thị (vd: 66.000đ)
+Package Item,price_display_duration,P.config.config_data[platform].duration_text,String,Text thời hạn (vd: /tháng)
+Package Item,btn_buy_pack,P.config.btn_buy_pack,Integer,1: Hiện nút; 0: Ẩn nút
+Package Item,btn_buy_pack_text,P.config.config_data[platform].btn_buy_pack_text,String,Text trên nút mua
+Package Item,promo.base_price,P.config.config_data[platform].promotion.base_price,String,Giá gốc trước giảm
+Package Item,promo.description,P.config.config_data[platform].promotion.description,String,Text mô tả khuyến mãi
+Package Item,position,P.position,Integer,Thứ tự sắp xếp gói
+Features,feature_type,F.key,String,Mã loại đặc quyền (num_device; 4k_quality; ...)
+Features,is_active,Logic BE,Integer,Cờ bật/tắt đặc quyền cho gói đó
+Features,value.text,F.config.display_text,String,Text hiển thị của đặc quyền
+Features,value.image_url,F.config.icon_url,String,Icon đặc quyền
+Logic Filter,Platform Filtering,P.config.platform,Logic,Lọc gói theo nền tảng (Web/Mobile/Ios)
+Logic Filter,User Status,P.config.is_sub / is_iptv,Logic,Ẩn gói Sub đối với Guest và ngược lại
+Logic Filter,SA Logic,G.type == 'fptplay_now',Logic,Ẩn nhóm gói OTT đối với tài khoản SA

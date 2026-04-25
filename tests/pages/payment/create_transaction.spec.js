@@ -3,7 +3,7 @@ import { purchaseData } from '../../data/loginData.js';
 import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
 import { authenticateUser } from '../../config/authConfig.js';
 import { package_screen, create_transaction_by_pmh, create_transaction_by_fpl } from '../../fixtures/paymentFixture.js';
-import { validateResponse } from '../../utils/validateResponse.js';
+import { validateSchema } from '../../utils/validateResponse.js';
 
 
 purchaseData.forEach(({phone, client_id, type, otp_code, benefit_phone, platform }, index) => {
