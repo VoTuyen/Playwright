@@ -17,23 +17,23 @@ export const check_transaction_data = [
             message: ""
         }
     },
-    {   
+    {
         tcs_description: "Kiểm tra mua gói V.VIP2 ko suvey được xuất hoá đơn bth, gọi api check có token",
         id: 7,
         is_survey: false,
         is_PMH: true,
         payment_success: true,
         plan_id: 7656,
-        is_over2h: false,  
+        is_over2h: false,
         is_login: true, //chỉ check bỏ token cho API check_transaction thôi
         expected: {
             description: "Lưu ý: Quá 2 giờ kể từ thời điểm thanh toán thành công, FPTPlay không hỗ trợ xuất hóa đơn.",
             payment_hub: true,
             message: "",
             export: true,
-            status_code : "SUCCESS",
+            status_code: "SUCCESS",
             title: "",
-            
+
         }
     },
     {
@@ -52,7 +52,7 @@ export const check_transaction_data = [
             status_code: "SUCCESS",
             title: "",
             message: ""
-        } 
+        }
     },
     {
         tcs_description: "Kiểm tra mua gói V.VIP1 có survey ko là KHTN, xuất hoá đơn bth, gọi api check có token",
@@ -72,7 +72,7 @@ export const check_transaction_data = [
             message: ""
         }
     },
-    {   
+    {
         id: 3,
         is_survey: true,
         is_PMH: false,
@@ -89,19 +89,19 @@ export const check_transaction_data = [
             message: ""
         }
     },
-    {   
+    {
         id: 5,
         is_survey: false,
         is_PMH: true,
         payment_success: true,
         plan_id: 7656,
-        is_over2h: false, 
+        is_over2h: false,
         is_login: true,
         expected: {
             description: "Lưu ý: Quá 2 giờ kể từ thời điểm thanh toán thành công, FPTPlay không hỗ trợ xuất hóa đơn.",
             payment_hub: true,
             export: true,
-            status_code : "SUCCESS",
+            status_code: "SUCCESS",
             title: "",
             message: ""
         }
@@ -118,7 +118,7 @@ export const check_transaction_data = [
             description: "",
             payment_hub: true,
             export: false,
-            status_code : "SUCCESS",
+            status_code: "SUCCESS",
             title: "Yêu cầu xuất hóa đơn thất bại.",
             message: "Xuất hóa đơn thất bại do quá thời gian hỗ trợ. Giao dịch này sẽ lập hóa đơn khách hàng lẻ theo quy định của FPT và phù hợp với quy định của pháp luật."
 
@@ -136,7 +136,7 @@ export const check_transaction_data = [
             description: "",
             payment_hub: false,
             export: false,
-            status_code : "PENDING",
+            status_code: "PENDING",
             title: "",
             message: ""
         }
@@ -144,28 +144,39 @@ export const check_transaction_data = [
 ];
 
 export const package_screen_data = [
-    // {
-    //     label: 'Tài khoản SA (web)',
-    //     phone: '0565123452',
-    //     client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
-    //     platform: '_w'
-    // },
-    // {
-    //     label: 'Tài khoản SUB (web)',
-    //     phone: '0986745978',
-    //     client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
-    //     platform: '_w'
-    // },
     {
-        label: 'Tài khoản SA (web)',
-        phone: '0986745978',
+        label: 'Tài khoản SA (Web)',
+        phone: '0565123452',
         client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
-        platform: '_w'
+        platform: '_w',
+        is_sub: 0
     },
     {
-        label: 'Không có token (web)',
+        label: 'Không có token (Web)',
         phone: '',
         client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
-        platform: '_w'
+        platform: '_w',
+        is_sub: 0
     },
+    {
+        label: 'Tài khoản SUB',
+        phone: '0986745978',
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_w',
+        is_sub: 1
+    },
+    {
+        label: 'Tài khoản Guest (Mobile Web)',
+        phone: '',
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_a',
+        is_sub: 0
+    },
+    {
+        label: 'Tài khoản Guest (IOS)',
+        phone: '',
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_ios',
+        is_sub: 0
+    }
 ]

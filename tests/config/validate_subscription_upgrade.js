@@ -28,12 +28,19 @@ export async function validate_subscription_upgrade(request, page_null, testCase
     // ── Step 3: Mua gói đang có (Gói A) → thanh toán thành công ─────────────────────────────
     console.log(`[Step 3] Tạo transaction gói A: ${current_package.name} (plan_id: ${current_package.plan_id})`);
     const txA = await create_transaction_by_fpl(request, authToken, current_package.plan_id);
+    console.log(txA);
     const paymentLinkA = txA?.msg_data?.payment_url;
     console.log('[Step 3] paymentLink gói A:', paymentLinkA);
-    let browserPageA = await init();
-    await browserPageA.goto(paymentLinkA);
-    await browserPageA.waitForTimeout(25000);
-    await close();  
+    
+    if (paymentLinkA) {
+        let browserPageA = await init();
+        await browserPageA.goto(paymentLinkA);
+        await browserPageA.waitForTimeout(25000);
+        await close();  
+    } else {
+        console.error('[Step 3] FAILED: Không lấy được Link thanh toán gói A.');
+        console.error('[DEBUG] API Response txA:', JSON.stringify(txA, null, 2));
+    }
 
     // ── Step 4: GET package screen gói nhỏ (hard data) → lấy btn_buy_pack ───────────────────
     console.log(`[Step 4] Gọi package_screen: plan_type=${new_package.plan_type}`);
@@ -42,8 +49,8 @@ export async function validate_subscription_upgrade(request, page_null, testCase
     );
     const btnBuyPack = packageDetailRes?.msg_data?.subscriber_group?.[expected.btn_buy_pack_group_index]
         ?.packages_list?.[expected.btn_buy_pack_list_index]?.btn_buy_pack;
-        console.log(`expected nhóm: ${expected.btn_buy_pack_group_index}`)
-        console.log(`expected gói: ${expected.btn_buy_pack_list_index}`)
+    console.log(`expected nhóm: ${expected.btn_buy_pack_group_index}`)
+    console.log(`expected gói: ${expected.btn_buy_pack_list_index}`)
     console.log('[Step 4] btn_buy_pack của gói B:', btnBuyPack);
 
     // ── Step 5: Thử tạo transaction gói B ─────────────────────────────────────
@@ -58,7 +65,7 @@ export async function validate_subscription_upgrade(request, page_null, testCase
     if (!txB.blocked) {
         console.log('[Step 6] Gói B được phép mua (!txB.blocked) → Tiến hành TẠO GIAO DỊCH mới...');
 
-        // Gọi lại hàm tạo giao dịch bằng FPL cho Gói B (do Bước 5 của bạn hiện tại chỉ gọi package_detail check conditions)
+        // Gọi hàm tạo giao dịch bằng FPL
         const realTxB = await create_transaction_by_fpl(request, authToken, new_package.plan_id);
         const paymentLinkB = realTxB?.msg_data?.payment_url;
         console.log(paymentLinkB);
@@ -79,7 +86,7 @@ export async function validate_subscription_upgrade(request, page_null, testCase
     subscriptionRes = await get_user_subscriptions(request, authToken, platform);
 
     // 👇 Log full response để xác định field path cho assertion
-    console.log('[Step 6] user_subscriptions full response:');
+    console.log('[Step 6] user_subscriptions full response:', subscriptionRes);
     const planID_subscription = subscriptionRes?.list?.[0]?.plan_id;
     console.log('[Step 6] planID_subscription:', planID_subscription);
     //console.log(JSON.stringify(subscriptionRes, null, 2));

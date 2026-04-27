@@ -17,8 +17,7 @@ const dataLogins = [
         otp_code: '999999',
         benefit_phone: '056***3451',
         platform: '_a'
-    },
-
+    }
 ];
 
 export default dataLogins
@@ -41,6 +40,3 @@ export const purchaseData = [
         platform: '_w'
     }
 ]
-
-
-

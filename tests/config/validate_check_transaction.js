@@ -31,8 +31,8 @@ async function handle_create_transaction(is_PMH, request, authToken, plan_id, ov
         return {
             PMH_success: true,
             plan_id,
-            transaction_id: response_create_transaction_pmh.msg_data.trans_id,
-            paymentLink: response_create_transaction_pmh.msg_data.value_display
+            transaction_id: response_create_transaction_pmh?.msg_data?.trans_id || "ERROR_NO_ID",
+            paymentLink: response_create_transaction_pmh?.msg_data?.value_display || null
         };
     } else {
         // Nếu không phải PMH
@@ -40,18 +40,20 @@ async function handle_create_transaction(is_PMH, request, authToken, plan_id, ov
         return {
             PMH_success: false,
             plan_id,
-            transaction_id: response_create_transaction_fpl.msg_data.trans_id,
-            paymentLink: response_create_transaction_fpl.msg_data.payment_url
+            transaction_id: response_create_transaction_fpl?.msg_data?.trans_id || "ERROR_NO_ID",
+            paymentLink: response_create_transaction_fpl?.msg_data?.payment_url || null
         };
     }
 }
 
 async function handle_payment_success(payment_success, page, paymentLink) {
-    if (payment_success == true) {
+    if (payment_success == true && typeof paymentLink === 'string') {
 
         await page.goto(paymentLink)
         await page.waitForTimeout(25000)
         return {payment_success: true}
+    } else if (payment_success == true) {
+        console.error('[Payment Error] payment_success is true but paymentLink is invalid:', paymentLink);
     }
 }
 

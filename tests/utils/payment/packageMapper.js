@@ -1,106 +1,82 @@
+import { PLATFORM } from '../../constants/platforms.js';
+
 /**
  * Logic mapper để chuyển đổi data từ CMS REST API sang cấu trúc giống App API (paymentgw)
  */
 
-export function mapCMSDataToAppStructure(groupsData, packagesData, displayConfigData, platform = 'web', isLoggedIn = false, isSA = false) {
+export function mapCMSDataToAppStructure(groupsData, packagesData, displayConfigData, platformArg = 'web', isLoggedIn = false, isSA = false, is_sub_input = 0) {
     const rawGroups = groupsData.data?.data || [];
     const rawPackages = packagesData.data?.data || [];
     const rawDisplay = displayConfigData.data?.data || [];
 
-    // 1. Lấy danh sách các quyền lợi được phép hiển thị trên nhóm gói
-    const activeFeatureKeys = rawDisplay
-        .filter(d => d.is_display_on_package_group === true)
-        .map(d => d.key);
+    // Chuẩn hóa platform truyền vào. Mặc định là WEB (_w)
+    const platform = platformArg === 'web' ? PLATFORM.WEB : platformArg;
 
-    // Map platform của CMS sang key trong config_data
-    // Web -> web-playfpt, Mobile -> mobile, default -> default
-    let platformKey = 'web-playfpt';
-    if (platform === '_ios' || platform === '_m') platformKey = 'mobile';
+    const PLATFORM_CONFIG = {
+        [PLATFORM.WEB]:     { groups: ['web', 'smarttv_html'], visibilityKeys: ['web-playfpt', 'web'], priceKey: 'web-playfpt' },
+        [PLATFORM.ANDROID]: { groups: ['mobile', 'android'], visibilityKeys: ['android', 'mobile'], priceKey: 'mobile' },
+        [PLATFORM.IOS]:     { groups: ['mobile', 'ios'], visibilityKeys: ['ios', 'mobile'], priceKey: 'mobile' }
+    };
+
+    const currentCfg = PLATFORM_CONFIG[platform] || { groups: ['web', 'mobile'], visibilityKeys: ['default'], priceKey: 'default' };
 
     const result = {
         subscriber_group: rawGroups
             .filter(group => {
-                // 1. Lọc Group theo Platform
                 const platforms = group.config?.platform || [];
-                const targetGroup = platforms.find(p => {
-                    if (platformKey === 'web-playfpt') return p.group === 'web' || p.group === 'smarttv_html'; 
-                    if (platformKey === 'mobile') return p.group === 'mobile';
-                    return false;
+                const isGroupVisible = platforms.some(p => {
+                    if (!currentCfg.groups.includes(p.group)) return false;
+                    const setupKeys = Object.keys(p.type || {});
+                    const hasTag = currentCfg.visibilityKeys.some(key => setupKeys.includes(key)) || setupKeys.includes('default');
+                    return hasTag;
                 });
-                if (!targetGroup) return false;
-
-                // 1.1 Logic cho SA: Ẩn nhóm fptplay_now (OTT) nếu đã có Home contract
-                if (isSA && group.type === 'fptplay_now') return false;
-
-                return targetGroup.type[platformKey] === "1" || targetGroup.type['default'] === "1";
+                return isGroupVisible;
             })
             .map(group => {
-                // 2. Lọc các gói (Packages) thuộc nhóm này
                 const packagesInGroup = rawPackages
                     .filter(p => {
-                        // a. Đúng nhóm gói và đang bật (status=1)
                         if (p.package_group !== group.type || p.status !== 1) return false;
-
-                        // b. Lọc Package theo Platform
-                        const pPlatforms = p.config?.platform || [];
-                        const pTargetGroup = pPlatforms.find(pg => {
-                            if (platformKey === 'web-playfpt') {
-                                return (pg.group === 'web' || pg.group === 'smarttv_html') && 
-                                       (pg.type[platformKey] === "1" || pg.type['default'] === "1");
-                            }
-                            if (platformKey === 'mobile') {
-                                return pg.group === 'mobile' && 
-                                       (pg.type[platformKey] === "1" || pg.type['default'] === "1");
-                            }
-                            return false;
-                        });
                         
-                        // Nếu gói không cấu hình platform này thì ẩn
-                        if (!pTargetGroup) return false;
+                        const pPlatforms = p.config?.platform || [];
+                        const isPkgVisible = pPlatforms.some(pg => {
+                            if (!currentCfg.groups.includes(pg.group)) return false;
+                            const pSetupKeys = Object.keys(pg.type || {});
+                            return currentCfg.visibilityKeys.some(key => pSetupKeys.includes(key)) || pSetupKeys.includes('default');
+                        });
 
-                        // c. Logic ẩn gói dựa trên trạng thái Login & is_sub/is_iptv
-                        const isSubPackage = (p.config?.is_sub === true || p.config?.is_iptv === true);
-                        if (isLoggedIn) {
-                            // User đã login (ví dụ SA) -> Thường chỉ xem các gói Sub/IPTV, ẩn các gói Guest-only
-                            if (!isSubPackage) return false;
-                        } else {
-                            // Guest -> Ẩn các gói Sub/IPTV
-                            if (isSubPackage) return false;
-                        }
+                        if (!isPkgVisible) return false;
 
-                        return true;
+                        const isSubPackageOnCMS = (p.config?.is_sub === true || p.config?.is_iptv === true);
+                        if (is_sub_input === 1) return isSubPackageOnCMS;
+                        return !isSubPackageOnCMS;
                     })
                     .sort((a, b) => (a.position || 0) - (b.position || 0))
                     .map(p => {
-                        const pConfig = p.config?.config_data?.[platformKey] || p.config?.config_data?.['default'] || {};
+                        const pConfig = p.config?.config_data?.[currentCfg.priceKey] || p.config?.config_data?.['default'] || {};
                         return {
-                            id: p.id,
                             type: p.plan_type,
-                            name: pConfig.package_name?.text || p.package_name,
+                            package_name: { text: pConfig.package_name?.text || p.package_name, color: "" },
                             price_display: pConfig.price_display,
-                            btn_buy_pack: p.config?.btn_buy_pack,
+                            btn_buy_pack: p.config?.btn_buy_pack || 1,
                             btn_buy_pack_text: pConfig.btn_buy_pack_text || "Mua ngay",
                         };
                     });
 
-            // 3. Lọc quyền lợi (features) cho nhóm gói dựa trên tab Q/lý quyền lợi
-            const groupFeatures = (group.config?.feature_display || [])
-                .filter(f => activeFeatureKeys.includes(f.feature_type))
-                .map(f => ({
-                    feature_name: f.feature_name,
-                    feature_type: f.feature_type,
-                    type_display: f.type_display
-                }));
-
-            return {
-                id: group.id,
-                type: group.type,
-                name: group.name,
-                sub_text: group.sub_text,
-                packages_list: packagesInGroup,
-                features: groupFeatures
-            };
-        }).filter(g => g.packages_list.length > 0) // CHỈ HIỂN THỊ NHÓM CÓ GÓI
+                return {
+                    type: group.type,
+                    name: group.name,
+                    sub_text: group.sub_text || "",
+                    packages_list: packagesInGroup,
+                    features_display: group.config?.feature_display || []
+                };
+            })
+            .filter(g => {
+                // ĐẶC BIỆT: App API trên Web tự động ẩn nhóm rỗng, nhưng trên iOS/Android thì giữ lại nhóm rỗng
+                if (platform === PLATFORM.WEB) {
+                    return g.packages_list.length > 0;
+                }
+                return true; 
+            })
     };
 
     return result;
