@@ -75,6 +75,23 @@ export class PaymentApi {
         return await this._safeJson(response, 'survey');
     }
 
+    async surveyCustomerInfo(authToken, platform, payload) {
+        const headers = {};
+        if (authToken) {
+            headers['Authorization'] = authToken;
+        }
+        
+        const response = await this.request.post(endpoints[platform].survey, {
+            data: payload,
+            headers: headers
+        });
+        
+        return {
+            status: response.status(),
+            body: await this._safeJson(response, 'surveyCustomerInfo')
+        };
+    }
+
     async getUserSubscriptions(authToken, platform) {
         const response = await this.request.get(endpoints[platform].user_subscriptions, {
             headers: { 'Authorization': authToken }

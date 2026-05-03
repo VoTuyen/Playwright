@@ -73,6 +73,10 @@ export async function survey(request, authToken, phone) {
     return await getApi(request).survey(authToken, "_w", data);
 }
 
+export async function survey_customer_info(request, authToken, payload) {
+    return await getApi(request).surveyCustomerInfo(authToken, "_w", payload);
+}
+
 export async function check_transaction(request, authToken, platform, trans_id) {
     // Lưu ý: check_transaction API thường dùng để check trạng thái sau thanh toán
     return await getApi(request).checkTransaction(platform, trans_id, authToken);
