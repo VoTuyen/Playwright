@@ -111,14 +111,14 @@ export const testAccounts = {
         }
     },
 
-    // ==========================================
+    // =========================================
     // 6. TÀI KHOẢN DÙNG CHO PACKAGE SCREEN
     //    File: tests/pages/payment/package_screen.spec.js
     // ==========================================
     PACKAGE_SCREEN_SA_USER: {
         description: "Tài khoản SA (Stand Alone) cho package_screen",
         payload: {
-            phone: '0565123452', // NOTE: Bạn có thể đổi SĐT khác ở đây
+            phone: '0565123413', // NOTE: Bạn có thể đổi SĐT khác ở đây
             client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
             type: 'login_fpl',
             otp_code: '999999',
@@ -128,7 +128,7 @@ export const testAccounts = {
     PACKAGE_SCREEN_SUB_USER: {
         description: "Tài khoản SUB (có hợp đồng) cho package_screen",
         payload: {
-            phone: '0974303989', // NOTE: Bạn có thể đổi SĐT khác ở đây
+            phone: '0967865952', // NOTE: Bạn có thể đổi SĐT khác ở đây
             client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
             type: 'login_fpl',
             otp_code: '999999',
