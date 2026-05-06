@@ -15,7 +15,9 @@ export async function validate_subscription_upgrade(request, page_null, testCase
     const { phone, client_id, platform } = account;
 
     // ── Step 1: Login → lấy bearer token ──────────────────────────────────────
-    const headers = { 'X-DID': '10:39:4E:A8:85:32', 'Content-Type': 'application/json' };
+    // Dùng X-DID động theo phone để mỗi worker có device riêng, tránh conflict khi chạy song song
+    const phoneHash = phone.slice(-1); // lấy ký tự cuối để tạo DID khác nhau
+    const headers = { 'X-DID': `10:39:4E:A8:85:3${phoneHash}`, 'Content-Type': 'application/json' };
     const authToken = await authenticateUser(
         request, phone, client_id, 'login_fpl', '999999', headers, platform
     );

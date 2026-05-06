@@ -9,8 +9,8 @@ export async function get_benefitUser(request, authToken, platform) {
     return await getApi(request).getBenefitUser(authToken, platform);
 }
 
-export async function package_screen(request, authToken, platform) {
-    return await getApi(request).getPackageScreen(authToken, platform);
+export async function package_screen(request, authToken, platform, extraHeaders = {}) {
+    return await getApi(request).getPackageScreen(authToken, platform, extraHeaders);
 }
 
 export async function get_user_subscriptions(request, authToken, platform) {

@@ -23,8 +23,12 @@ export class PaymentApi {
         return await this._safeJson(response, 'getBenefitUser');
     }
 
-    async getPackageScreen(authToken, platform) {
-        const options = authToken ? { headers: { 'Authorization': authToken } } : {};
+    async getPackageScreen(authToken, platform, extraHeaders = {}) {
+        const headers = {
+            ...extraHeaders,
+            ...(authToken ? { 'Authorization': authToken } : {})
+        };
+        const options = Object.keys(headers).length ? { headers } : {};
         const response = await this.request.get(endpoints[platform].package, options);
         return await this._safeJson(response, 'getPackageScreen');
     }

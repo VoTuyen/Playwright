@@ -90,14 +90,17 @@ export async function get_benefitUser(request, authToken, platform) {
 
 
 export const test = base.extend({
-    async headers({}, use) {
-        // Tạo object chứa header
+    async headers({}, use, testInfo) {
+        // Mỗi worker sẽ có một X-DID riêng để tránh bị API chặn do trùng thiết bị khi chạy song song
+        const workerId = testInfo.workerIndex;
+        const dynamicDid = `10:39:4E:A8:85:3${workerId}`; 
+
         const header = {
-            'X-DID': '10:39:4E:A8:85:32',
+            'X-DID': dynamicDid,
             'Content-Type': 'application/json'
         };
 
-        await use(header); // Sử dụng fixture
+        await use(header); 
     }
 });
 

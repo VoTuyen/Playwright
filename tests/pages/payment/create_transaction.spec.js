@@ -1,34 +1,49 @@
-import { send_otp, validate_user, verify_OTP, login, get_benefitUser, bearerToken } from '../../fixtures/loginFixture.js';
-import { purchaseData } from '../../data/loginData.js';
-import { test as baseTest, expect } from '../../fixtures/loginFixture.js'
+import { test as baseTest, expect } from '../../fixtures/loginFixture.js';
 import { authenticateUser } from '../../config/authConfig.js';
-import { package_screen, create_transaction_by_pmh, create_transaction_by_fpl } from '../../fixtures/paymentFixture.js';
-import { validateSchema } from '../../utils/validateResponse.js';
+import { create_transaction_by_pmh, create_transaction_by_fpl } from '../../fixtures/paymentFixture.js';
+import { createTransactionData } from '../../data/paymentData.js';
 
+/**
+ * Create Transaction Tests
+ * - Data (account + plan_id) được quản lý trong paymentData.js → createTransactionData
+ * - plan_id dùng chung cho cả PMH và FPL
+ * - Spec file không hardcode bất kỳ giá trị nào
+ */
+createTransactionData.forEach(({ description, account, plan_id }) => {
 
-purchaseData.forEach(({phone, client_id, type, otp_code, benefit_phone, platform }, index) => {
+    baseTest.describe(`Create Transaction — ${description}`, () => {
+        let bearerToken = { authToken: null };
 
-    baseTest.describe('Create transaction', () => {
-        let bearerToken = {
-            authToken: null,
-        }
+        baseTest.beforeEach(async ({ request, headers }) => {
+            bearerToken.authToken = await authenticateUser(
+                request,
+                account.phone,
+                account.client_id,
+                account.type,
+                account.otp_code,
+                headers,
+                account.platform
+            );
+        });
 
-        baseTest.beforeEach(async ({request, headers}) => {
-            bearerToken.authToken = await authenticateUser(request, phone, client_id, type, otp_code, headers, platform)
-        })
+        baseTest(`[PMH] Mua gói plan_id=${plan_id} thành công`, async ({ request }) => {
+            const response = await create_transaction_by_pmh(request, bearerToken.authToken, plan_id);
+            console.log('[PMH] Response:', JSON.stringify(response, null, 2));
 
-        baseTest(`mua gói PMH thành công ${index}`, async({request}) => {
+            expect(response, 'API phải trả về response').toBeDefined();
+            expect(response.msg_data, `API PMH trả về null cho plan_id=${plan_id}`).not.toBeNull();
+            expect(response.msg_data?.trans_id, 'trans_id phải tồn tại').toBeDefined();
+            console.log('[PMH] trans_id:', response.msg_data?.trans_id);
+        });
 
-            const response = await create_transaction_by_pmh(request, bearerToken.authToken)
-            console.log(response.msg_data.trans_id)
-        })
+        baseTest(`[FPL] Mua gói plan_id=${plan_id} thành công`, async ({ request }) => {
+            const response = await create_transaction_by_fpl(request, bearerToken.authToken, plan_id);
+            console.log('[FPL] Response:', JSON.stringify(response, null, 2));
 
-        baseTest(`Mua gói FPL thành công ${index}`, async({request}) => {
-
-            const reponse = await create_transaction_by_fpl(request, bearerToken.authToken)
-            console.log(reponse.msg_data.trans_id)
-
-        })
-
-    })
-})
+            expect(response, 'API phải trả về response').toBeDefined();
+            expect(response.msg_data, `API FPL trả về null cho plan_id=${plan_id}`).not.toBeNull();
+            expect(response.msg_data?.trans_id, 'trans_id phải tồn tại').toBeDefined();
+            console.log('[FPL] trans_id:', response.msg_data?.trans_id);
+        });
+    });
+});

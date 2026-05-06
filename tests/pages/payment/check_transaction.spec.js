@@ -7,6 +7,7 @@ import { init, close } from '../../fixtures/browserFixture.js';
 //const testData = require('../../data/data.json') 
 import { check_transaction_data } from '../../data/paymentData.js';
 import { validate_check_transaction } from '../../config/validate_check_transaction.js';
+import { testAccounts } from '../../data/testAccounts.js';
 
 check_transaction_data.forEach(({is_survey, is_PMH, payment_success, plan_id, is_over2h, is_login, expected, id}, index) => {
 
@@ -21,12 +22,12 @@ check_transaction_data.forEach(({is_survey, is_PMH, payment_success, plan_id, is
         })
 
         baseTest.beforeEach(async ({request, headers}) => {
-            bearerToken.authToken = await authenticateUser(request, '0565123452', '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a' , 'login_fpl', '999999', headers, '_w')
+            bearerToken.authToken = await authenticateUser(request, testAccounts.CHECK_TXN_USER.payload.phone, testAccounts.CHECK_TXN_USER.payload.client_id , 'login_fpl', '999999', headers, '_w')
         })
 
         baseTest(`Testcase ${id}`, async({request}) => {
 
-            const phone = '0565123452';
+            const phone = testAccounts.CHECK_TXN_USER.payload.phone;
             
             const result = await validate_check_transaction(is_survey, is_PMH, payment_success, plan_id, is_over2h, is_login, request, bearerToken.authToken, page, phone)
             const test = validateSchema(result.body, 'check_transaction_schema')

@@ -21,10 +21,10 @@ export default defineConfig({
   timeout: 40 * 1000,
 
   testDir: './tests',
-  fullyParallel: false,
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 6,
   reporter: 'html',
   use: {
     baseURL: process.env.API_DOMAIN, // Sử dụng Domain từ .env

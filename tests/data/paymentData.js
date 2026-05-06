@@ -1,3 +1,23 @@
+import { testAccounts } from './testAccounts.js';
+
+/**
+ * Data cho create_transaction.spec.js
+ * Mỗi object gồm: account (thông tin đăng nhập) + plan_id (gói cần mua)
+ * plan_id dùng chung cho cả PMH và FPL — không hardcode trong spec.
+ */
+export const createTransactionData = [
+    {
+        description: "Tài khoản có benefit — mua gói Cine",
+        account: testAccounts.CREATE_TXN_USER.payload,
+        plan_id: 7802,  // Gói Cine
+    },
+    {
+        description: "Tài khoản không benefit — mua gói V.VIP1",
+        account: testAccounts.CHECK_TXN_USER.payload,
+        plan_id: 7100,  // Gói V.VIP1
+    },
+];
+
 export const check_transaction_data = [
     {
         tcs_description: "Kiểm tra quá 2h vẫn là KHTN, gọi API check ko có token",
@@ -146,9 +166,7 @@ export const check_transaction_data = [
 export const package_screen_data = [
     {
         label: 'Tài khoản SA (Web)',
-        phone: '0565123452',
-        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
-        platform: '_w',
+        ...testAccounts.PACKAGE_SCREEN_SA_USER.payload,
         is_sub: 0
     },
     {
@@ -160,9 +178,7 @@ export const package_screen_data = [
     },
     {
         label: 'Tài khoản SUB',
-        phone: '0986745978',
-        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
-        platform: '_w',
+        ...testAccounts.PACKAGE_SCREEN_SUB_USER.payload,
         is_sub: 1
     },
     {

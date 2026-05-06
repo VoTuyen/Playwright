@@ -3,6 +3,7 @@ import { survey_customer_info } from '../../fixtures/paymentFixture.js';
 import { customer_info_data } from '../../data/customerInfoData.js';
 import { authenticateUser } from '../../config/authConfig.js';
 import { validateSchema } from '../../utils/validateResponse.js';
+import { testAccounts } from '../../data/testAccounts.js';
 
 let globalAuthToken = '';
 
@@ -15,8 +16,8 @@ baseTest.beforeAll(async () => {
     // Login để lấy Bearer token thật trước khi chạy test, số DT này dùng tạm từ file dev
     globalAuthToken = await authenticateUser(
         apiContext, 
-        '0565123454', 
-        '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a', 
+        testAccounts.CUSTOMER_INFO_USER.payload.phone, 
+        testAccounts.CUSTOMER_INFO_USER.payload.client_id, 
         'login_fpl', 
         '999999', 
         headers, 
@@ -39,8 +40,31 @@ customer_info_data.forEach((testCase) => {
             console.log(`[Flow] Gọi API Customer Info với payload:`, testCase.payload);
 
             // 1. Gửi request
-            const response = await survey_customer_info(request, testToken, testCase.payload);
+            let response = await survey_customer_info(request, testToken, testCase.payload);
             
+            // [TỰ ĐỘNG LÀM MỚI TOKEN NẾU BỊ 401]
+            // Lưu ý: Chỉ refresh nếu không phải là TC cố tình test lỗi authentication (TC 010)
+            if ((response.status === 401) && testCase.tc_id !== 'FPT_SURVEY_TC_010') {
+                console.warn(`[401] Token toàn cục đã hết hạn. Đang làm mới cho ${testAccounts.CUSTOMER_INFO_USER.payload.phone}...`);
+                const { clearTokenCache } = await import('../../config/authConfig.js');
+                clearTokenCache(testAccounts.CUSTOMER_INFO_USER.payload.phone);
+                
+                // Cập nhật lại token toàn cục cho các test case sau
+                globalAuthToken = await authenticateUser(
+                    request, 
+                    testAccounts.CUSTOMER_INFO_USER.payload.phone, 
+                    testAccounts.CUSTOMER_INFO_USER.payload.client_id, 
+                    'login_fpl', 
+                    '999999', 
+                    { 'X-DID': '10:39:4E:A8:85:32', 'Content-Type': 'application/json' }, 
+                    '_w',
+                    true
+                );
+                
+                // Thử lại với token mới
+                response = await survey_customer_info(request, globalAuthToken, testCase.payload);
+            }
+
             // 2. Asserts Status
             console.log(`[Assert] Verify status: response ${response.status} | expected: ${testCase.expected.status}`);
             expect(response.status).toEqual(testCase.expected.status);

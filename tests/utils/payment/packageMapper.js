@@ -47,6 +47,8 @@ export function mapCMSDataToAppStructure(groupsData, packagesData, displayConfig
                         if (!isPkgVisible) return false;
 
                         const isSubPackageOnCMS = (p.config?.is_sub === true || p.config?.is_iptv === true);
+                        // SUB user (ký hợp đồng): thấy gói is_sub=true (V.VIP, VIP...)
+                        // SA user (mua lẻ): thấy gói is_sub=false (V.VIP1, V.VIP2...)
                         if (is_sub_input === 1) return isSubPackageOnCMS;
                         return !isSubPackageOnCMS;
                     })
