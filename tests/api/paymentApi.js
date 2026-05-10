@@ -42,6 +42,20 @@ export class PaymentApi {
         return await this._safeJson(response, 'getPackageDetail');
     }
 
+    async getPackagePreview(authToken, platform, package_type) {
+        const url = new URL(endpoints[platform].package_preview);
+        url.searchParams.append('package_type', package_type);
+        url.searchParams.append('is_drm', '1');
+        url.searchParams.append('from_source', 'play');
+        url.searchParams.append('is_preview', '1');
+        url.searchParams.append('drm', '1');
+        
+        const response = await this.request.get(url.toString(), {
+            headers: { 'Authorization': authToken }
+        });
+        return await this._safeJson(response, 'getPackagePreview');
+    }
+
 
     async createTransaction(authToken, platform, data) {
         const endpoint = data.payment_gateway_code === 'INTERNATIONAL' 

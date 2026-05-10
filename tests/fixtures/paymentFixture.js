@@ -22,6 +22,10 @@ export async function get_package_detail(request, authToken, platform, plan_type
     return await getApi(request).getPackageDetail(authToken, platform, plan_type);
 }
 
+export async function get_package_preview(request, authToken, platform, package_type) {
+    return await getApi(request).getPackagePreview(authToken, platform, package_type);
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // FLOWS / BUSINESS LOGIC
 // ─────────────────────────────────────────────────────────────────────────────

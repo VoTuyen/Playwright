@@ -20,6 +20,7 @@ const endpoints = SUPPORTED_PLATFORMS.reduce((acc, platform) => {
         device_remove: `${API_BASE_URL}${platform}/account/device/remove`,
         package: `${API_BASE_URL}${platform}/paymentgw/packages`,
         package_detail: `${API_BASE_URL}${platform}/paymentgw/packages/detail`,
+        package_preview: `${API_BASE_URL}${platform}/paymentgw/packages/get_packages_preview`,
         create_transaction_by_pmh: `${API_BASE_URL}${platform}/paymentgw/payment_hub/create_transaction`,
         create_transaction_by_fpl: `${API_BASE_URL}${platform}/paymentgw/foxpay/credit/create`,
         check_transaction: `${API_BASE_URL}${platform}/paymentgw/payment_hub/check_transaction`,

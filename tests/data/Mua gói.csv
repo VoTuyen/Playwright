@@ -1,0 +1,4 @@
+;;;;;;;
+;Nội dung;method;Domain;Endpoint;params;Headers;Giá trị đầu vào cho plan_type ở param
+;Mua gói trực tiếp;GET;https://api-staging.fptplay.net/api/v7.1_w;/paymentgw/packages/detail;from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1;authorization;Phimbovip, svodmaxvip, sieu-viet, vtv, htv-tms, thao-le
+;Mua gói qua preview 5p;GET;https://api-staging.fptplay.net/api/v7.1_w;/paymentgw/packages/get_packages_preview;is_drm=1&package_type=phimbovip&from_source=play&is_preview=1&drm=1;authorization;Phimbovip, svodmaxvip
