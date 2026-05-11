@@ -1,4 +1,29 @@
-;;;;;;;
-;Ná»™i dung;method;Domain;Endpoint;params;Headers;GiÃ¡ trá»‹ Ä‘áº§u vÃ o cho plan_type á»Ÿ param
-;Mua gÃ³i trá»±c tiáº¿p;GET;https://api-staging.fptplay.net/api/v7.1_w;/paymentgw/packages/detail;from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1;authorization;Phimbovip, svodmaxvip, sieu-viet, vtv, htv-tms, thao-le
-;Mua gÃ³i qua preview 5p;GET;https://api-staging.fptplay.net/api/v7.1_w;/paymentgw/packages/get_packages_preview;is_drm=1&package_type=phimbovip&from_source=play&is_preview=1&drm=1;authorization;Phimbovip, svodmaxvip
+Column1,Column2,Column3,Column4,Column5,Column6,Column7,Column72,Column8,Column9
+,,,,,,,,,
+,N?i dung,method,Domain,Endpoint,params,Headers,Lo?i tài kho?n,Giá tr? ??u vào cho plan_type ? param,Expected gói ??u ra
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,phimbovip,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,svodmaxvip,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,sieu-viet,type_display = 7
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,nha,v-vip1
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,vtv,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,htv-tms,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,thao-le,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,kenh-le,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,golf,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,fa-cup,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,sukien,premium
+,Mua gói tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,null,no login,phimbovip,status code tr? 401
+,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,phimbovip,"msg_data:
+- plan_type: premium
+- plan_type: v-vip1"
+,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,svodmaxvip,"msg_data:
+- plan_type: premium
+- plan_type: v-vip1"
+,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,nha,"msg_data:
+- plan_type: v-vip1
+- plan_type: v-vip2"
+,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,null,no login,force_login_vod,"msg_data:
+- plan_type: lite"
+,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,null,no login,phimbovip,"msg_data:
+- plan_type: premium
+- plan_type: v-vip1"

@@ -11,15 +11,20 @@ export function readDataFile(filePath) {
     try {
         const fs = require('fs');
         const content = fs.readFileSync(filePath, 'utf-8');
-        // Thêm FS: ';' để nhận diện đúng định dạng dấu chấm phẩy của bạn
-        const workbook = XLSX.read(content, { type: 'string', FS: ';' });
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         
-        // Chuyển đổi sang JSON. { defval: "" } giúp tránh bỏ sót cell trống.
-        return XLSX.utils.sheet_to_json(worksheet, { 
-            raw: false, 
-            defval: "" 
-        });
+        // Thử đọc với dấu chấm phẩy trước
+        let workbook = XLSX.read(content, { type: 'string', FS: ';' });
+        let worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        let data = XLSX.utils.sheet_to_json(worksheet, { raw: false, defval: "" });
+
+        // Nếu không ra dữ liệu hoặc chỉ có 1 cột (có thể do sai delimiter), thử với dấu phẩy
+        if (data.length > 0 && Object.keys(data[0]).length <= 1) {
+            workbook = XLSX.read(content, { type: 'string' }); // Default (comma)
+            worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            data = XLSX.utils.sheet_to_json(worksheet, { raw: false, defval: "" });
+        }
+        
+        return data;
     } catch (error) {
         console.error(`[dataReader] Lỗi khi đọc file tại ${filePath}:`, error.message);
         return [];

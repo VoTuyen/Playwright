@@ -1,0 +1,30 @@
+STT,API_Field,CMS_Field_Draft,Actual_CMS_Field,Description
+1,group.name,Tên hiển thị nhóm,,Tên tiêu đề của nhóm gói (FPT Play NOW/HOME)
+2,group.sub-text,Mô tả ngắn nhóm gói,,Dòng chữ nhỏ dưới tên nhóm
+3,group.type,Mã nhóm (Slug),,Định danh nhóm gói (fptplay_now)
+4,group.is_focus,Ưu tiên hiển thị (Focus),,Trạng thái nổi bật của nhóm
+5,group.is_app_review,Ẩn khi App Review,,Chế độ ẩn gói khi app đang bị Apple/Google review
+6,block.image,Logo nhóm (Desktop),,Ảnh logo của nhóm gói trên Web
+7,block.image_gif,Logo nhóm (GIF),,Ảnh logo động của nhóm gói
+8,block.background,Ảnh nền chính,,Ảnh nền chính của màn hình (Background)
+9,block.background_tablet,Ảnh nền Tablet,,Ảnh nền cho máy tính bảng
+10,block.background_mobile,Ảnh nền Mobile,,Ảnh nền cho điện thoại
+11,block.inactive_background,Ảnh nền khi chưa kích hoạt,,Background khi gói chưa được mua
+12,block.color_code,Mã màu chủ đạo (Hex),,Màu sắc thương hiệu của nhóm
+13,block.top_background_desktop,Ảnh Top Background (Web),,Ảnh nền phía trên cùng
+14,block.footer_banners[].image,Ảnh Banner chân trang,,Hình ảnh banner quảng cáo phía dưới
+15,block.footer_banners[].deeplink,Link điều hướng Banner,,Link khi click vào banner chân trang
+16,pkg.type,Mã gói (Slug),,Định danh gói cước (premium/cine/v-vip)
+17,pkg.package_name.text,Tên hiển thị gói,,Tên gói cước (Premium/Cine)
+18,pkg.price_display,Giá bán hiển thị,,Giá tiền kèm đơn vị
+19,pkg.price_display_duration,Chu kỳ thanh toán,,Đơn vị thời gian (/tháng)
+20,pkg.is_promotion,Bật khuyến mãi,,Trạng thái có đang giảm giá hay không
+21,pkg.promo.base_price,Giá gốc (chưa giảm),,Giá cũ trước khi khuyến mãi
+22,pkg.btn_buy_pack_text,Tên nút bấm,,Chữ trên nút (Mua ngay/Đăng ký)
+23,pkg.btn_buy_pack,Trạng thái logic nút,,1: Đang dùng | 2: Mua ngay
+24,pkg.position,Thứ tự sắp xếp gói,,Vị trí hiển thị của gói
+25,f.feature_type,Mã tính năng (Feature ID),,ID quyền lợi (num_device/bong_da_anh)
+26,f.is_active,Trạng thái kích hoạt,,Bật/Tắt quyền lợi (0/1)
+27,f.value.text,Giá trị tính năng (Text),,Số lượng thiết bị hoặc text hiển thị
+28,desc.text[],Nội dung lưu ý thanh toán,,Các dòng text dưới chân trang
+29,desc.platform_text,Tiêu đề nền tảng hỗ trợ,,Chữ "Các nền tảng hỗ trợ"
