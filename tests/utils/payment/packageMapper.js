@@ -13,9 +13,9 @@ export function mapCMSDataToAppStructure(groupsData, packagesData, displayConfig
     const platform = platformArg === 'web' ? PLATFORM.WEB : platformArg;
 
     const PLATFORM_CONFIG = {
-        [PLATFORM.WEB]:     { groups: ['web', 'smarttv_html'], visibilityKeys: ['web-playfpt', 'web'], priceKey: 'web-playfpt' },
+        [PLATFORM.WEB]: { groups: ['web', 'smarttv_html'], visibilityKeys: ['web-playfpt', 'web'], priceKey: 'web-playfpt' },
         [PLATFORM.ANDROID]: { groups: ['mobile', 'android'], visibilityKeys: ['android', 'mobile'], priceKey: 'mobile' },
-        [PLATFORM.IOS]:     { groups: ['mobile', 'ios'], visibilityKeys: ['ios', 'mobile'], priceKey: 'mobile' }
+        [PLATFORM.IOS]: { groups: ['mobile', 'ios'], visibilityKeys: ['ios', 'mobile'], priceKey: 'mobile' }
     };
 
     const currentCfg = PLATFORM_CONFIG[platform] || { groups: ['web', 'mobile'], visibilityKeys: ['default'], priceKey: 'default' };
@@ -36,7 +36,7 @@ export function mapCMSDataToAppStructure(groupsData, packagesData, displayConfig
                 const packagesInGroup = rawPackages
                     .filter(p => {
                         if (p.package_group !== group.type || p.status !== 1) return false;
-                        
+
                         const pPlatforms = p.config?.platform || [];
                         const isPkgVisible = pPlatforms.some(pg => {
                             if (!currentCfg.groups.includes(pg.group)) return false;
@@ -77,7 +77,7 @@ export function mapCMSDataToAppStructure(groupsData, packagesData, displayConfig
                 if (platform === PLATFORM.WEB) {
                     return g.packages_list.length > 0;
                 }
-                return true; 
+                return true;
             })
     };
 

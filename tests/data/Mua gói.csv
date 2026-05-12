@@ -1,29 +1,29 @@
 Column1,Column2,Column3,Column4,Column5,Column6,Column7,Column72,Column8,Column9
 ,,,,,,,,,
-,N?i dung,method,Domain,Endpoint,params,Headers,Lo?i t�i kho?n,Gi� tr? ??u v�o cho plan_type ? param,Expected g�i ??u ra
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,phimbovip,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,svodmaxvip,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,sieu-viet,type_display = 7
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,nha,v-vip1
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,vtv,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,htv-tms,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,thao-le,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,kenh-le,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,golf,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,fa-cup,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,sukien,premium
-,Mua g�i tr?c ti?p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,null,no login,phimbovip,status code tr? 401
-,Mua g�i qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,phimbovip,"msg_data:
+ID,Nội dung,method,Domain,Endpoint,params,Headers,Loại tài khoản,Giá trị đầu vào cho plan_type ở param,Expected gói đầu ra
+1,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,phimbovip,premium
+2,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,svodmaxvip,premium
+3,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,sieu-viet,type_display = 7
+4,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,nha,v-vip1
+5,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,vtv,premium
+6,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,htv-tms,premium
+7,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,thao-le,premium
+8,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,kenh-le,premium
+9,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,golf,premium
+10,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,fa-cup,premium
+11,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,authorization,SA,sukien,premium
+12,Mua gói trực tiếp,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/detail,from_source=play&plan_type={{plan_type}}&is_wap=1&drm=1,null,no login,phimbovip,401
+13,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,phimbovip,"msg_data:
 - plan_type: premium
 - plan_type: v-vip1"
-,Mua g�i qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,svodmaxvip,"msg_data:
+14,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,svodmaxvip,"msg_data:
 - plan_type: premium
 - plan_type: v-vip1"
-,Mua g�i qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,nha,"msg_data:
+15,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,authorization,SA,nha,"msg_data:
 - plan_type: v-vip1
 - plan_type: v-vip2"
-,Mua g�i qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,null,no login,force_login_vod,"msg_data:
+16,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,null,no login,force_login_vod,"msg_data:
 - plan_type: lite"
-,Mua g�i qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,null,no login,phimbovip,"msg_data:
+17,Mua gói qua preview 5p,GET,https://api-staging.fptplay.net/api/v7.1_w,/paymentgw/packages/get_packages_preview,is_drm=1&package_type={{plan_type}}&from_source=play&is_preview=1&drm=1,null,no login,phimbovip,"msg_data:
 - plan_type: premium
 - plan_type: v-vip1"

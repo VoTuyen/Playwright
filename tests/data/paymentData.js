@@ -7,9 +7,9 @@ import { testAccounts } from './testAccounts.js';
  */
 export const createTransactionData = [
     {
-        description: "Tài khoản có benefit — mua gói Cine",
+        description: "Tài khoản có benefit — mua gói Premium",
         account: testAccounts.CREATE_TXN_USER.payload,
-        plan_id: 7802,  // Gói Cine
+        plan_id: 6598,  // Gói Premium
     },
     {
         description: "Tài khoản không benefit — mua gói V.VIP1",

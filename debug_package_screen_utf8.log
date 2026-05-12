@@ -1,0 +1,191 @@
+﻿Γùç injected env (2) from .env // tip: Γîÿ multiple files { path: ['.env.local', '.env'] }
+
+Running 5 tests using 5 workers
+
+Γùç injected env (0) from .env // tip: Γîÿ multiple files { path: ['.env.local', '.env'] }
+Γùç injected env (0) from .env // tip: Γùê secrets for agents [www.dotenvx.com]
+Γùç injected env (0) from .env // tip: Γùê secrets for agents [www.dotenvx.com]
+Γùç injected env (0) from .env // tip: Γîÿ enable debugging { debug: true }
+Γùç injected env (0) from .env // tip: Γùê secrets for agents [www.dotenvx.com]
+[AUTH] T├ái khoß║ún SUB (0967865952): Login th├ánh c├┤ng Γ£ô
+  -  4 [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún SUB ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún SUB
+[RAW API] subscriber_group count: 2
+  RAW Group: fptplay_now, packages: premium(is_sub:undefined), cine(is_sub:undefined)
+  RAW Group: fptplay_home, packages: v-vip1(is_sub:undefined), v-vip2(is_sub:undefined)
+[RAW API] subscriber_group count: 3
+  RAW Group: fptplay_now, packages: premium(is_sub:undefined), cine(is_sub:undefined)
+  RAW Group: fptplay_home, packages: 
+  RAW Group: fptplay_go, packages: v-vip1(is_sub:undefined), v-vip2(is_sub:undefined)
+[RAW API] subscriber_group count: 2
+  RAW Group: fptplay_now, packages: premium(is_sub:undefined), cine(is_sub:undefined)
+  RAW Group: fptplay_home, packages: v-vip1(is_sub:undefined), v-vip2(is_sub:undefined)
+[AUTH] T├ái khoß║ún SA (Web) (0565123413): Login th├ánh c├┤ng Γ£ô
+[RAW API] subscriber_group count: 2
+  RAW Group: fptplay_now, packages: premium(is_sub:undefined), cine(is_sub:undefined)
+  RAW Group: fptplay_home, packages: v-vip1(is_sub:undefined), v-vip2(is_sub:undefined)
+[DEBUG_API_RAW] Platform: _w, CMS Raw Groups Count: 3
+[DEBUG] Testing case: Kh├┤ng c├│ token (Web), is_sub_input: 0
+
+--- CMS EXPECTED PACKAGES for Kh├┤ng c├│ token (Web) ---
+Group: fptplay_now (FPT Play NOWw)
+  - Package: Premium (premium), Price: 75.00Γé½
+Group: fptplay_home (FPT Play HOME)
+  - Package: V.VIP1 (v-vip1), Price: 120.000Γé½
+  - Package: V.VIP2 (v-vip2), Price: 
+-------------------------------------------
+
+
+--- API ACTUAL PACKAGES for Kh├┤ng c├│ token (Web) ---
+Group: fptplay_now (FPT Play NOWw) ΓÇö 2 g├│i
+  - Premium (premium), btn: 1
+  - Cine (cine), btn: 1
+Group: fptplay_home (FPT Play HOME) ΓÇö 2 g├│i
+  - V.VIP1 (v-vip1), btn: 1
+  - V.VIP2 (v-vip2), btn: 1
+-------------------------------------------
+
+  x  2 [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: Kh├┤ng c├│ token (Web) ΓÇ║ Verify Schema and CMS Data Mapping - Kh├┤ng c├│ token (Web) (1.3s)
+[DEBUG_API_RAW] Platform: _ios, CMS Raw Groups Count: 3
+[DEBUG] Testing case: T├ái khoß║ún Guest (IOS), is_sub_input: 0
+
+--- CMS EXPECTED PACKAGES for T├ái khoß║ún Guest (IOS) ---
+Group: fptplay_now (FPT Play NOWw)
+  - Package: Premium (premium), Price: 99.00Γé½
+Group: fptplay_home (FPT Play HOME)
+Group: fptplay_go (FPT Play GO)
+  - Package: V.VIP1 (v-vip1), Price: 155.000Γé½
+  - Package: V.VIP2 (v-vip2), Price: 195.000Γé½
+-------------------------------------------
+
+
+--- API ACTUAL PACKAGES for T├ái khoß║ún Guest (IOS) ---
+Group: fptplay_now (FPT Play NOWw) ΓÇö 2 g├│i
+  - Premium (premium), btn: 1
+  - G├│i Cine (cine), btn: 1
+Group: fptplay_home (FPT Play HOME) ΓÇö 0 g├│i
+Group: fptplay_go (FPT Play GO) ΓÇö 2 g├│i
+  - V.VIP1 (v-vip1), btn: 1
+  - V.VIP2 (v-vip2), btn: 1
+-------------------------------------------
+
+  x  5 [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún Guest (IOS) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún Guest (IOS) (1.2s)
+[DEBUG_API_RAW] Platform: _w, CMS Raw Groups Count: 3
+[DEBUG] Testing case: T├ái khoß║ún SA (Web), is_sub_input: 0
+
+--- CMS EXPECTED PACKAGES for T├ái khoß║ún SA (Web) ---
+Group: fptplay_now (FPT Play NOWw)
+  - Package: Premium (premium), Price: 75.00Γé½
+Group: fptplay_home (FPT Play HOME)
+  - Package: V.VIP1 (v-vip1), Price: 120.000Γé½
+  - Package: V.VIP2 (v-vip2), Price: 
+-------------------------------------------
+
+
+--- API ACTUAL PACKAGES for T├ái khoß║ún SA (Web) ---
+Group: fptplay_now (FPT Play NOWw) ΓÇö 2 g├│i
+  - Premium (premium), btn: 1
+  - Cine (cine), btn: 1
+Group: fptplay_home (FPT Play HOME) ΓÇö 2 g├│i
+  - V.VIP1 (v-vip1), btn: 1
+  - V.VIP2 (v-vip2), btn: 1
+-------------------------------------------
+
+[DEBUG_API_RAW] Platform: _a, CMS Raw Groups Count: 3
+[DEBUG] Testing case: T├ái khoß║ún Guest (Mobile Web), is_sub_input: 0
+
+--- CMS EXPECTED PACKAGES for T├ái khoß║ún Guest (Mobile Web) ---
+Group: fptplay_now (FPT Play NOWw)
+  - Package: Premium (premium), Price: 99.00Γé½
+Group: fptplay_home (FPT Play HOME)
+  - Package: V.VIP1 (v-vip1), Price: 120.000Γé½
+  - Package: V.VIP2 (v-vip2), Price: 150.000Γé½
+-------------------------------------------
+
+
+--- API ACTUAL PACKAGES for T├ái khoß║ún Guest (Mobile Web) ---
+Group: fptplay_now (FPT Play NOWw) ΓÇö 2 g├│i
+  - Premium (premium), btn: 1
+  - G├│i Cine (cine), btn: 1
+Group: fptplay_home (FPT Play HOME) ΓÇö 2 g├│i
+  - V.VIP1 (v-vip1), btn: 1
+  - V.VIP2 (v-vip2), btn: 1
+-------------------------------------------
+
+  x  1 [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún SA (Web) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún SA (Web) (1.3s)
+  x  3 [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún Guest (Mobile Web) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún Guest (Mobile Web) (1.3s)
+
+
+  1) [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún SA (Web) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún SA (Web) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+       98 |                 
+       99 |                 // 4.2 Verify Danh s├ích g├│i trong nh├│m (TC4 Logic Filter)
+    > 100 |                 expect(actualGroup.packages_list.length).toBe(expectedGroup.packages_list.length);
+          |                                                          ^
+      101 |                 
+      102 |                 expectedGroup.packages_list.forEach((expectedPack, pIdx) => {
+      103 |                     const actualPack = actualGroup.packages_list[pIdx];
+        at forEach (D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:100:58)
+        at D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:92:42
+
+  2) [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: Kh├┤ng c├│ token (Web) ΓÇ║ Verify Schema and CMS Data Mapping - Kh├┤ng c├│ token (Web) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+       98 |                 
+       99 |                 // 4.2 Verify Danh s├ích g├│i trong nh├│m (TC4 Logic Filter)
+    > 100 |                 expect(actualGroup.packages_list.length).toBe(expectedGroup.packages_list.length);
+          |                                                          ^
+      101 |                 
+      102 |                 expectedGroup.packages_list.forEach((expectedPack, pIdx) => {
+      103 |                     const actualPack = actualGroup.packages_list[pIdx];
+        at forEach (D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:100:58)
+        at D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:92:42
+
+  3) [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún Guest (Mobile Web) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún Guest (Mobile Web) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+       98 |                 
+       99 |                 // 4.2 Verify Danh s├ích g├│i trong nh├│m (TC4 Logic Filter)
+    > 100 |                 expect(actualGroup.packages_list.length).toBe(expectedGroup.packages_list.length);
+          |                                                          ^
+      101 |                 
+      102 |                 expectedGroup.packages_list.forEach((expectedPack, pIdx) => {
+      103 |                     const actualPack = actualGroup.packages_list[pIdx];
+        at forEach (D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:100:58)
+        at D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:92:42
+
+  4) [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún Guest (IOS) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún Guest (IOS) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+       98 |                 
+       99 |                 // 4.2 Verify Danh s├ích g├│i trong nh├│m (TC4 Logic Filter)
+    > 100 |                 expect(actualGroup.packages_list.length).toBe(expectedGroup.packages_list.length);
+          |                                                          ^
+      101 |                 
+      102 |                 expectedGroup.packages_list.forEach((expectedPack, pIdx) => {
+      103 |                     const actualPack = actualGroup.packages_list[pIdx];
+        at forEach (D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:100:58)
+        at D:\TuyenVTT7\Playwright - API\Playwright\tests\pages\payment\package_screen.spec.js:92:42
+
+  4 failed
+    [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún SA (Web) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún SA (Web) 
+    [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: Kh├┤ng c├│ token (Web) ΓÇ║ Verify Schema and CMS Data Mapping - Kh├┤ng c├│ token (Web) 
+    [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún Guest (Mobile Web) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún Guest (Mobile Web) 
+    [chromium] ΓÇ║ tests\pages\payment\package_screen.spec.js:27:9 ΓÇ║ Package Screen: T├ái khoß║ún Guest (IOS) ΓÇ║ Verify Schema and CMS Data Mapping - T├ái khoß║ún Guest (IOS) 
+  1 skipped

@@ -48,6 +48,7 @@ test.describe('API Mua Gói - Data Driven Testing', () => {
     dataRows.forEach((row, index) => {
         const scenarioName = getVal(row, 'Nội dung') || `Scenario ${index + 1}`;
         const endpoint = getVal(row, 'Endpoint');
+        const id = getVal(row, 'ID') || '';
         const domain = getVal(row, 'Domain') || process.env.API_DOMAIN || 'https://api-staging.fptplay.net';
         const paramsTemplate = getVal(row, 'params') || '';
         const headerConfig = getVal(row, 'Headers');
@@ -57,7 +58,7 @@ test.describe('API Mua Gói - Data Driven Testing', () => {
 
         if (!endpoint) return;
 
-        test(`[CSV] ${scenarioName} - Case: ${inputValue} (${accountType})`, async ({ request }) => {
+        test(`[CSV] ${id ? `ID ${id} - ` : ''}${scenarioName} - Case: ${inputValue} (${accountType})`, async ({ request }) => {
             let token = null;
             if (headerConfig && headerConfig.toLowerCase() === 'authorization') {
                 token = (accountType === 'SUB') ? subToken : saToken;

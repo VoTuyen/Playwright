@@ -19,7 +19,16 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
 
     // 1. Kiểm tra cache trước, nếu đã có token và không yêu cầu refresh thì dùng lại
     if (!forceRefresh && fs.existsSync(cacheFile)) {
-        return fs.readFileSync(cacheFile, 'utf8');
+        const stats = fs.statSync(cacheFile);
+        const ageInHours = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60);
+        
+        // Nếu file token được tạo chưa quá 12 tiếng, tái sử dụng
+        if (ageInHours < 12) {
+            return fs.readFileSync(cacheFile, 'utf8');
+        } else {
+            console.log(`[Cache] Token của ${phone} đã quá hạn (${ageInHours.toFixed(1)}h), tiến hành fetch mới...`);
+            // fs.unlinkSync(cacheFile); // Không cần xoá, lát ghi đè lên
+        }
     }
 
     try {

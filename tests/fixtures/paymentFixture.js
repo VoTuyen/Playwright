@@ -56,7 +56,8 @@ export async function create_transaction_by_pmh(request, authToken, plan_id) {
         plan_id: plan_id, payment_gateway_code: "INTERNATIONAL",
         display_mode: "REDIRECT_URL", return_url: "https://dev.fptplay.vn/dich-vu/thanh-toan/foxpay_credit"
     };
-    return await getApi(request).createTransaction(authToken, PLATFORM.WEB, data);
+    const headers = { 'X-DID': '20:39:4E:A8:85:99', 'Content-Type': 'application/json' };
+    return await getApi(request).createTransaction(authToken, PLATFORM.WEB, data, headers);
 }
 
 export async function create_transaction_by_fpl(request, authToken, plan_id) {
@@ -64,7 +65,8 @@ export async function create_transaction_by_fpl(request, authToken, plan_id) {
         card_number: "5200000000002235", card_cvv: "111", card_expiration_month: "12", card_expiration_year: "27",
         plan_id: plan_id, return_url: "https://dev.fptplay.vn/dich-vu/thanh-toan/foxpay_credit"
     };
-    return await getApi(request).createTransaction(authToken, PLATFORM.WEB, data);
+    const headers = { 'X-DID': '20:39:4E:A8:85:99', 'Content-Type': 'application/json' };
+    return await getApi(request).createTransaction(authToken, PLATFORM.WEB, data, headers);
 }
 
 

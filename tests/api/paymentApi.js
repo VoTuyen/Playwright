@@ -57,16 +57,21 @@ export class PaymentApi {
     }
 
 
-    async createTransaction(authToken, platform, data) {
+    async createTransaction(authToken, platform, data, extraHeaders = {}) {
         const endpoint = data.payment_gateway_code === 'INTERNATIONAL' 
             ? endpoints[platform].create_transaction_by_pmh 
             : endpoints[platform].create_transaction_by_fpl;
 
         console.log(endpoint);
 
+        const headers = {
+            ...extraHeaders,
+            ...(authToken ? { 'Authorization': authToken } : {})
+        };
+
         const response = await this.request.post(endpoint, {
             data: data,
-            headers: {'Authorization': authToken}
+            headers: headers
         });
         const result = await this._safeJson(response, 'createTransaction');
         
