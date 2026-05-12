@@ -9,7 +9,7 @@ export const createTransactionData = [
     {
         description: "Tài khoản có benefit — mua gói Premium",
         account: testAccounts.CREATE_TXN_USER.payload,
-        plan_id: 6598,  // Gói Premium
+        plan_id: 6598,  // Gói Cine
     },
     {
         description: "Tài khoản không benefit — mua gói V.VIP1",

@@ -1,0 +1,220 @@
+
+
+FPT Play  |  Product Requirement Document 
+Bảo mật nội bộ  —  v1.0 
+ 
+Hiển thị Gói Đang Sử Dụng  —  PRD v1.0 Trang 1 
+ 
+FPT Play 
+Product Requirement Document 
+ 
+ 
+ 
+Hiển thị Gói Cao Nhất trong "Gói Đang Sử 
+Dụng" 
+ 
+Feature ID FPT-PAY-001 
+Module Quản lý thanh toán và gói 
+Phiên bản 1.0  
+Ngày cập nhật 05/05/2026 
+Trạng thái Final 
+Tác giả Product Team 
+ 
+1. Tổng Quan 
+ 
+1.1 Bối cảnh 
+Màn hình "Gói đang sử dụng" hiện tại đang hiển thị tất cả các gói của user, kể cả gói phụ, gây 
+ra trải nghiệm khó đọc và nhầm lẫn. Mục tiêu là điều chỉnh lại để chỉ hiển thị gói cao nhất (main 
+package) theo đúng phân cấp kinh doanh. 
+ 
+1.2 Mục tiêu 
+• Chỉ hiển thị gói chính cao nhất của user trên màn hình "Gói đang sử dụng". 
+• Ẩn hoàn toàn các gói phụ 
+• Phân biệt rõ 2 loại hiển thị: gói tự động gia hạn và gói một lần. 
+• Hỗ trợ 2 nhánh gói riêng biệt: KH SA và KH SUB, có thể tồn tại đồng thời trên 1 tài 
+khoản. 
+ 
+2. Phân Cấp Gói Hiện Hành 
+ 
+2.1 Sơ đồ phân cấp 
+ 
+Phân cấp gói FPT Play (cao → thấp) 
+
+FPT Play  |  Product Requirement Document 
+Bảo mật nội bộ  —  v1.0 
+ 
+Hiển thị Gói Đang Sử Dụng  —  PRD v1.0 Trang 2 
+KH SA (Standalone Account) 
+1. V.VIP2 [CAO NHẤT] 
+2. V.VIP1 
+3. VIP/SVIP 
+4. Premium / Premium+ 
+5. SMAX/SMAX+ 
+6. IZI 
+7. Cine/ZPLAY Lite 
+ 
+ 
+KH SUB (Subscription) 
+1. V.VIP [CAO NHẤT] 
+2. S.VIP 
+3. VIP  
+4. MAX / MAXY 
+5. IZI 
+6. ZPLAY 
+ 
+Gói Add on: Sport, Không quảng cáo  
+ 
+ 
+2.2 Ghi chú quan trọng 
+• Một tài khoản có thể có cả gói SUB và add-on cùng lúc — đây là trường hợp bình 
+thường. 
+• Gói Không Quảng Cáo LUÔN bị ẩn, không phụ thuộc vào điều kiện nào. 
+• Danh sách gói có thể thay đổi theo yêu cầu từ CS kinh doanh. 
+ 
+3. Logic Xác Định Gói Chính 
+ 
+3.1 Whitelist gói chính 
+Chỉ các gói trong danh sách sau mới được xét là gói chính. Các gói không có trong danh sách 
+này sẽ bị ẩn. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Nhánh Tên gói 
+SUB V.VIP 
+SUB S.VIP 
+
+FPT Play  |  Product Requirement Document 
+Bảo mật nội bộ  —  v1.0 
+ 
+Hiển thị Gói Đang Sử Dụng  —  PRD v1.0 Trang 3 
+SUB VIP 
+SUB MAX/MAXY 
+SUB 
+IZI 
+SUB ZPLAY 
+SA V.VIP2 
+SA V.VIP1 
+SA VIP/SVIP 
+SA Premium / Premium+ 
+SA SMAX/SMAX+ 
+SA IZI 
+SA Cine/ZPLAY Lite 
+Add on Sport 
+ 
+3.2 Danh sách gói luôn ẩn 
+• Không Quảng Cáo 
+ 
+ 
+ 
+4. Yêu Cầu Hiển Thị 
+ 
+4.1 Các trường hợp hiển thị 
+ 
+Trường hợp Điều kiện Kết quả hiển thị 
+UC-01: Gói SUB Gói thuộc thuê bao hợp 
+đồng 
+Card đầy đủ: tên, ngày bắt đầu tính cước, chu 
+kỳ cước tiếp theo 
+ 
+UC-01: Gói tự động 
+gia hạn 
+is_auto_renewal = true Card đầy đủ: tên, ngày sử dụng từ, có thời 
+hạn đến. 
+ 
+UC-02: Gói SA is_auto_renewal = false Card đầy đủ: tên, ngày sử dụng từ, có thời 
+hạn đến. 
+UC-03: Không có gói 
+chính 
+Sau lọc, kết quả rỗng Empty state + nút CTA mua gói 
+UC-04: Có cả SA + 
+SUB đồng thời 
+1 tài khoản có cả gói SA lẫn 
+gói SUB còn hạn 
+Hiện 2 card riêng biệt, không gộp. Thứ tự: 
+SUB trên, SA dưới, add-on cuối cùng. 
+
+FPT Play  |  Product Requirement Document 
+Bảo mật nội bộ  —  v1.0 
+ 
+Hiển thị Gói Đang Sử Dụng  —  PRD v1.0 Trang 4 
+UC-05: Chỉ có 1 
+nhánh 
+Chỉ SA hoặc chỉ SUB Hiện 1 card duy nhất 
+ 
+ 
+4.2 Dữ liệu hiển thị — Gói SUB 
+ 
+Trường Bắt buộc Mô tả 
+package_name Có Tên gói hiển thị. VD: "Gói V.VIP2" 
+start_date Có Ngày sử dụng từ DD/MM/YYYY 
+next_billing_date Có Chu kỳ cước tiếp theo DD/MM/YYYY 
+ 
+ 
+4.3 Dữ liệu hiển thị — Gói SA 
+ 
+Trường Bắt buộc Mô tả 
+package_name Có Tên gói hiển thị. VD: "Gói Premium" 
+start_date Có Ngày sử dụng từ DD/MM/YYYY 
+end_date Có Có thời hạn đến DD/MM/YYYY 
+ 
+ 
+ 
+ 
+7. Mô Hình Giao Diện (UI Reference) 
+ 
+7.1 Gói SUB 
+ 
+V.VIP 
+ 
+Ngày bắt đầu tính cước  01/05/2026 
+Chu kỳ cước tiếp theo 07/05/2026 
+ 
+  
+ 
+7.2 Gói tự động gia hạn/ SA 
+
+FPT Play  |  Product Requirement Document 
+Bảo mật nội bộ  —  v1.0 
+ 
+Hiển thị Gói Đang Sử Dụng  —  PRD v1.0 Trang 5 
+V.VIP1 
+ 
+V.VIP1   
+ 
+Ngày sử dụng từ  01/05/2026 
+Có thời hạn đến 07/05/2026 
+ 
+ 
+V.VIP1 
+V.VIP1 
+ 
+Ngày sử dụng từ  01/05/2026 
+Có thời hạn đến 07/05/2026 
+ 
+ 
+7.3 Gói ADD ON 
+SPORT 
+SPORT 
+ 
+Ngày sử dụng từ  01/05/2026 
+Có thời hạn đến 07/05/2026 
+ 
+ 
+ 
+ 
+10. Lịch Sử Thay Đổi 
+ 
+Ver Ngày Nội dung 
+1.0 05/05/2026 Tạo mới tài liệu, logic ban đầu 
+ 
