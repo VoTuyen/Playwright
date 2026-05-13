@@ -194,5 +194,31 @@ export const package_screen_data = [
         client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
         platform: '_ios',
         is_sub: 0
+    },
+    {
+        label: 'Tài khoản SA (Web) - payment_version 25',
+        ...testAccounts.PACKAGE_SCREEN_SA_USER.payload,
+        is_sub: 0,
+        payment_version: 25
+    },
+    {
+        label: 'Tài khoản SA (Web) - payment_version 24',
+        ...testAccounts.PACKAGE_SCREEN_SA_USER.payload,
+        is_sub: 0,
+        payment_version: 24
+    },
+    {
+        label: 'Tài khoản SA (Web) - payment_version 26',
+        ...testAccounts.PACKAGE_SCREEN_SA_USER.payload,
+        is_sub: 0,
+        payment_version: 26
+    },
+    {
+        label: 'Tài khoản Guest (IOS) - payment_version 25',
+        phone: '',
+        client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+        platform: '_ios',
+        is_sub: 0,
+        payment_version: 25
     }
 ]
