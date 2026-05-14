@@ -128,4 +128,10 @@ export class PaymentApi {
         });
         return await this._safeJson(response, 'getUserSubscriptions');
     }
+
+    async getPurchasedService(authToken, platform = '_w') {
+        const headers = authToken ? { 'Authorization': authToken } : {};
+        const response = await this.request.get(endpoints[platform].purchased_service, { headers });
+        return await this._safeJson(response, 'getPurchasedService');
+    }
 }

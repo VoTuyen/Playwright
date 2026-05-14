@@ -95,6 +95,10 @@ export async function clear_user_data(request, phone) {
     return await response.json();
 }
 
+export async function get_purchased_service(request, authToken, platform = '_w') {
+    return await getApi(request).getPurchasedService(authToken, platform);
+}
+
 export function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

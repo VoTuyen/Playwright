@@ -125,6 +125,26 @@ export const testAccounts = {
             platform: '_w'
         }
     },
+    PACKAGE_SCREEN_SA_USER_V25: {
+        description: "Tài khoản SA riêng cho payment_version 25 (tránh race condition)",
+        payload: {
+            phone: '0565123414',
+            client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+            type: 'login_fpl',
+            otp_code: '999999',
+            platform: '_w'
+        }
+    },
+    PACKAGE_SCREEN_SA_USER_V26: {
+        description: "Tài khoản SA riêng cho payment_version 26 (tránh race condition)",
+        payload: {
+            phone: '0565123415',
+            client_id: '1aTxvUI1kFfTSuHFDObHkEs21sDTgm8bEUOCJs9a',
+            type: 'login_fpl',
+            otp_code: '999999',
+            platform: '_w'
+        }
+    },
     PACKAGE_SCREEN_SUB_USER: {
         description: "Tài khoản SUB (có hợp đồng) cho package_screen",
         payload: {

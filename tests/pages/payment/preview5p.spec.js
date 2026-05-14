@@ -4,26 +4,36 @@ import path from 'path';
 import { authenticateUser } from '../../config/authConfig.js';
 import { testAccounts } from '../../data/testAccounts.js';
 
-const csvPath = path.resolve(process.cwd(), 'tests/data/Mua gói.csv');
+const csvPath = path.resolve(process.cwd(), 'tests/data/preview5pData.csv');
 const rawData = readDataFile(csvPath);
 
-// Find header and data rows
-const headerRow = rawData.find(row => Object.values(row).some(v => v === 'Endpoint'));
-
+// CSV sạch: readDataFile đã parse thành object với key = tên cột
 const dataRows = rawData.filter(row => {
     const values = Object.values(row);
     return values.some(v => v && typeof v === 'string' && v.includes('/paymentgw/'));
 });
 
+// Map tên field logic -> key thực tế trong CSV
+const FIELD_MAP = {
+    'Nội dung':   'Noi dung',
+    'Loại tài khoản': 'Loai tai khoan',
+    'Giá trị đầu vào cho plan_type ở param': 'Gia tri dau vao cho plan_type o param',
+    'Expected gói đầu ra': 'Expected goi dau ra',
+};
+
 function getVal(row, headerName) {
-    if (!headerRow) return undefined;
-    const key = Object.keys(headerRow).find(k => {
-        const val = (headerRow[k] || '').toString();
-        if (headerName === 'Nội dung') return val.includes('dung');
-        if (headerName === 'Loại tài khoản') return val.includes('kho') || val.includes('tài khoản');
-        if (headerName === 'Giá trị đầu vào cho plan_type ở param') return val.includes('plan_type');
-        if (headerName === 'Expected gói đầu ra') return val.includes('Expected');
-        return val.toLowerCase() === headerName.toLowerCase();
+    // Thử exact match trước
+    if (row[headerName] !== undefined) return row[headerName];
+    // Thử map tiếng Việt → không dấu
+    const mappedKey = FIELD_MAP[headerName];
+    if (mappedKey && row[mappedKey] !== undefined) return row[mappedKey];
+    // Fallback: fuzzy match theo keyword
+    const key = Object.keys(row).find(k => {
+        if (headerName === 'Nội dung') return k.toLowerCase().includes('dung');
+        if (headerName === 'Loại tài khoản') return k.toLowerCase().includes('kho');
+        if (headerName === 'Giá trị đầu vào cho plan_type ở param') return k.toLowerCase().includes('plan_type');
+        if (headerName === 'Expected gói đầu ra') return k.toLowerCase().includes('expected');
+        return k.toLowerCase() === headerName.toLowerCase();
     });
     return key ? row[key] : undefined;
 }

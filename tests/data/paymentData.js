@@ -197,7 +197,7 @@ export const package_screen_data = [
     },
     {
         label: 'Tài khoản SA (Web) - payment_version 25',
-        ...testAccounts.PACKAGE_SCREEN_SA_USER.payload,
+        ...testAccounts.PACKAGE_SCREEN_SA_USER_V25.payload,
         is_sub: 0,
         payment_version: 25
     },
@@ -209,7 +209,7 @@ export const package_screen_data = [
     },
     {
         label: 'Tài khoản SA (Web) - payment_version 26',
-        ...testAccounts.PACKAGE_SCREEN_SA_USER.payload,
+        ...testAccounts.PACKAGE_SCREEN_SA_USER_V26.payload,
         is_sub: 0,
         payment_version: 26
     },

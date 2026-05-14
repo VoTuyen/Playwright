@@ -100,3 +100,51 @@ export async function createCMSContext({ headless = true, verify = true } = {}) 
 
     return { browser, context, page };
 }
+
+/**
+ * Tự động ép hết hạn gói của một user qua UI CMS.
+ * Logic được record từ session CMS thực tế.
+ *
+ * @param {string} phone - Số điện thoại của tài khoản cần ép hết hạn
+ */
+export async function auto_expire_package_via_cms(phone) {
+    console.log(`[CMS Robot] Bắt đầu ép hết hạn gói cho SĐT: ${phone}`);
+
+    const { browser, context, page } = await createCMSContext({ headless: true, verify: false });
+
+    try {
+        await page.goto(`${CMS_BASE_URL}/home`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
+
+        // Bước 1: Vào Xử lý nghiệp vụ → tìm user
+        await page.getByRole('button', { name: 'Xử lý nghiệp vụ', exact: true }).click();
+        await page.getByRole('textbox', { name: 'Điện thoại' }).fill(phone);
+        await page.getByRole('button', { name: 'Tìm' }).click();
+
+        // Bước 2: Chuyển sang tab Quản lý gói dịch vụ
+        await page.getByRole('tab', { name: 'Quản lý gói dịch vụ' }).click();
+
+        // Bước 3: Click vào nút Edit gói đầu tiên
+        await page.getByRole('button').filter({ hasText: 'edit' }).first().click();
+
+        // Bước 4: Mở date picker và chỉnh về ngày trong quá khứ (chọn tháng trước)
+        await page.getByRole('button').filter({ hasText: /^$/ }).click(); // Mở datepicker
+        await page.getByRole('button').nth(2).click(); // Prev month
+        await page.getByRole('button').nth(2).click(); // Prev month lần 2 (về 2 tháng trước)
+        await page.locator('div').filter({ hasText: /^1$/ }).first().click(); // Chọn ngày 1
+
+        // Bước 5: Nhập lý do và Lưu
+        await page.locator('textarea[name="reason"]').fill('Auto expire for testing');
+        await page.getByRole('button', { name: 'Lưu' }).click();
+        await page.getByRole('button', { name: 'Lưu' }).click(); // Confirm dialog
+
+        // Đợi CMS xử lý
+        await new Promise(r => setTimeout(r, 3000));
+
+        console.log(`[CMS Robot] ✅ Đã ép hết hạn gói thành công cho: ${phone}`);
+    } catch (err) {
+        console.error(`[CMS Robot] ❌ Lỗi khi ép hết hạn gói: ${err.message}`);
+        throw err;
+    } finally {
+        await browser.close();
+    }
+}
