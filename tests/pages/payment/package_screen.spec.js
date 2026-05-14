@@ -9,7 +9,7 @@ import { package_screen_data } from '../../data/paymentData.js';
 import {bearerToken} from '../../fixtures/loginFixture.js';
 
 // TC1: Validate response structure & data consistency across different accounts and platforms
-package_screen_data.forEach(({ label, phone, client_id, platform, is_sub }, index) => {
+package_screen_data.forEach(({ label, phone, client_id, platform, is_sub, payment_version }, index) => {
 
     baseTest.describe(`Package Screen: ${label}`, () => {
 
@@ -32,7 +32,7 @@ package_screen_data.forEach(({ label, phone, client_id, platform, is_sub }, inde
             }
 
             // 1. Gọi API App (truyền headers gồm X-DID để API nhận diện đúng loại tài khoản SUB/SA)
-            let response = await package_screen(request, authBearer.authToken, platform, headers);
+            let response = await package_screen(request, authBearer.authToken, platform, headers, payment_version);
             
             // [TỰ ĐỘNG LÀM MỚI TOKEN NẾU BỊ 401]
             if (response?.msg_code === 'unauthorized' || response?.status === 401) {
@@ -40,7 +40,7 @@ package_screen_data.forEach(({ label, phone, client_id, platform, is_sub }, inde
                 const { clearTokenCache } = await import('../../config/authConfig.js');
                 clearTokenCache(phone);
                 authBearer.authToken = await authenticateUser(request, phone, client_id, 'login_fpl', '999999', headers, platform, true);
-                response = await package_screen(request, authBearer.authToken, platform, headers);
+                response = await package_screen(request, authBearer.authToken, platform, headers, payment_version);
             }
 
             // [RAW] Log full API response trước khi validate schema
@@ -64,7 +64,7 @@ package_screen_data.forEach(({ label, phone, client_id, platform, is_sub }, inde
             console.log(`[DEBUG] Testing case: ${label}, is_sub_input: ${is_sub}`);
             const isLoggedIn = !!phone;
             const isSA = label.includes('SA');
-            const cmsExpected = mapCMSDataToAppStructure(groups, packages, display, platform, isLoggedIn, isSA, is_sub);
+            const cmsExpected = mapCMSDataToAppStructure(groups, packages, display, platform, isLoggedIn, isSA, is_sub, payment_version);
 
             // In ra danh sách gói nhận được từ CMS để đối soát
             console.log(`\n--- CMS EXPECTED PACKAGES for ${label} ---`);
@@ -121,6 +121,23 @@ package_screen_data.forEach(({ label, phone, client_id, platform, is_sub }, inde
                          // Thực hiện các check logic khác nếu cần
                     }
                 });
+
+                if (payment_version >= 25) {
+                    expectedGroup.packages_list.forEach((expectedPack, pIdx) => {
+                        const actualPack = actualGroup.packages_list[pIdx];
+                        
+                        // features_display của gói rỗng hoặc không tồn tại
+                        if (actualPack.features_display) {
+                            expect(actualPack.features_display.length).toBe(0);
+                        }
+                        
+                        // data đặc quyền phải nằm trong group_features_display
+                        if (expectedPack.group_features_display && expectedPack.group_features_display.length > 0) {
+                            expect(actualPack.group_features_display).toBeDefined();
+                            expect(actualPack.group_features_display.length).toBeGreaterThan(0);
+                        }
+                    });
+                }
             });
         });
     });

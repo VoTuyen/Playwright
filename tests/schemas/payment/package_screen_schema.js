@@ -105,6 +105,13 @@ export const package_screen_schema = {
                         additionalProperties: true
                       }
                     },
+                    group_features_display: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        additionalProperties: true
+                      }
+                    },
                     btn_buy_pack: { anyOf: [{ type: "integer" }, { type: "number" }] },
                     btn_buy_pack_text: { type: "string" },
                     position: { anyOf: [{ type: "integer" }, { type: "number" }] },
@@ -164,6 +171,13 @@ export const package_screen_schema = {
       },
       required: ["subscriber_group"],
       additionalProperties: true
+    },
+    features_display: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: true
+      }
     }
   },
   required: ["msg_code", "msg_content", "msg_data"],

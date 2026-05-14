@@ -23,13 +23,20 @@ export class PaymentApi {
         return await this._safeJson(response, 'getBenefitUser');
     }
 
-    async getPackageScreen(authToken, platform, extraHeaders = {}) {
+    async getPackageScreen(authToken, platform, extraHeaders = {}, paymentVersion = null) {
         const headers = {
             ...extraHeaders,
             ...(authToken ? { 'Authorization': authToken } : {})
         };
         const options = Object.keys(headers).length ? { headers } : {};
-        const response = await this.request.get(endpoints[platform].package, options);
+        
+        let url = endpoints[platform].package;
+        if (paymentVersion !== null && paymentVersion !== undefined) {
+            const separator = url.includes('?') ? '&' : '?';
+            url += `${separator}payment_version=${paymentVersion}`;
+        }
+
+        const response = await this.request.get(url, options);
         return await this._safeJson(response, 'getPackageScreen');
     }
 
