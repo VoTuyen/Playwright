@@ -21,7 +21,7 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
     if (!forceRefresh && fs.existsSync(cacheFile)) {
         const stats = fs.statSync(cacheFile);
         const ageInHours = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60);
-        
+
         // Nếu file token được tạo chưa quá 12 tiếng, tái sử dụng
         if (ageInHours < 12) {
             return fs.readFileSync(cacheFile, 'utf8');
@@ -40,13 +40,13 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
         const verify_token_otp = response_verify_Otp.data?.verify_token;
 
         const response_login = await login(request, phone, client_id, verify_token_otp, headers, platform);
-    
+
         let finalToken = '';
 
         if (response_login.error_code == 7) {
             const verify_token_device_limit_list = response_login.data.verify_token;
             const response_device_limit_list = await device_limit_list(request, verify_token_device_limit_list, headers, platform);
-            
+
             const device_id = response_device_limit_list.data.devices[1]?.id || response_device_limit_list.data.devices[0]?.id;
             const verify_token_remove_device = response_device_limit_list.data.verify_token;
 
@@ -54,11 +54,11 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
             const access_token = response_device_remove.data?.access_token;
             const access_token_type = response_device_remove.data?.access_token_type || 'Bearer';
 
-            finalToken = `${access_token_type} ${access_token}`; 
+            finalToken = `${access_token_type} ${access_token}`;
         } else {
             const access_token = response_login.data?.access_token;
             const access_token_type = response_login.data?.access_token_type || 'Bearer';
-            finalToken = `${access_token_type} ${access_token}`; 
+            finalToken = `${access_token_type} ${access_token}`;
         }
 
         // 2. Lưu token vừa lấy được vào file cache để các test khác dùng chung
@@ -76,8 +76,8 @@ export async function authenticateUser(request, phone, client_id, type, otp_code
     } catch (error) {
         console.error(`[Auth Error] ${phone}:`, error.message);
         clearTokenCache(phone); // Xóa cache nếu có lỗi xảy ra trong quá trình auth
-        throw error; 
-    }   
+        throw error;
+    }
 }
 
 

@@ -27,7 +27,7 @@ const endpoints = SUPPORTED_PLATFORMS.reduce((acc, platform) => {
         user_subscriptions: `${API_BASE_URL}${platform}/paymentgw/subscription/user_subscriptions`,
         survey: `${API_BASE_URL}${platform}/paymentgw/survey/customer-info`,
         clear_user_data: `https://staging-api-payment.fptplay.net/api/v1/clear_tester_data`,
-        purchased_service: `${API_BASE_URL}${platform}/paymentgw/purchased_service`
+        purchased_service: `${API_BASE_URL}${platform}/paymentgw/customer/purchased_service`
     };
     return acc;
 }, {});
