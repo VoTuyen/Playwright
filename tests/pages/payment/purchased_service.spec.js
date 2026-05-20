@@ -58,8 +58,9 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
             // BƯỚC 1: PRE-CONDITION (SETUP TEST STATE)
             // ==========================================
             console.log(`[Setup] 1. Clear toàn bộ gói của ${testAccount.phone}...`);
-            await clear_user_data(request, testAccount.phone);
-            await new Promise(r => setTimeout(r, 1000)); // Đợi backend xử lý xoá
+            const clearRes = await clear_user_data(request, testAccount.phone);
+            console.log(`[Setup] Clear Result:`, JSON.stringify(clearRes));
+            await new Promise(r => setTimeout(r, 5000)); // Đợi backend xử lý xoá hoàn toàn
 
             if (planId) {
                 console.log(`[Setup] 2. Tiến hành tự động mua gói: ${planId}...`);
@@ -135,10 +136,11 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
                     // Dùng Regex để bóc tách phần JSON nằm trong cặp dấu { }
                     const jsonMatch = expectedAssertRaw.match(/\{.*\}/);
                     const cleanJson = jsonMatch ? jsonMatch[0] : expectedAssertRaw.trim();
-                    expected = JSON.parse(cleanJson);
+                    // Tự động chuẩn hóa các ký tự nháy kép thông minh từ Excel/CSV
+                    const normalizedJson = cleanJson.replace(/[“”]/g, '"');
+                    expected = JSON.parse(normalizedJson);
                 } catch (e) {
-                    console.warn(`[Lỗi] Không parse được JSON cột Expected_Assert. Vui lòng kiểm tra lại định dạng trong file CSV.`);
-                    return; // Dừng lại nếu không parse được
+                    throw new Error(`[Lỗi] Không parse được JSON cột Expected_Assert ("${expectedAssertRaw}"). Vui lòng kiểm tra lại định dạng trong file CSV. Chi tiết: ${e.message}`);
                 }
 
                 // Tách phần Assert ra ngoài try-catch để nếu fail thì Playwright báo đúng lỗi
@@ -153,19 +155,24 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
 
                 // Hỗ trợ cả plan_ids và plan_type (để tương thích với CSV)
                 const planIdsToCheck = expected.plan_ids || expected.plan_type;
-                if (planIdsToCheck && Array.isArray(planIdsToCheck)) {
+                if (planIdsToCheck) {
                     const actualPlanTypes = purchasedRes.msg_data?.packages?.map(p => String(p.plan_type)) || [];
-                    
+
                     console.log(`[Assert] Danh sách plan_type thực tế:`, actualPlanTypes);
                     console.log(`[Assert] Danh sách plan_type mong đợi:`, planIdsToCheck);
 
+                    // Chuẩn hóa planIdsToCheck thành Array để kiểm tra đồng bộ (hỗ trợ cả string lẻ và array)
+                    const expectedArray = Array.isArray(planIdsToCheck) 
+                        ? planIdsToCheck.map(String) 
+                        : [String(planIdsToCheck)];
+
                     // Kiểm tra độ dài mảng phải khớp nhau
-                    expect(actualPlanTypes.length, `Số lượng gói thực tế (${actualPlanTypes.length}) không khớp với số lượng mong đợi trong CSV (${planIdsToCheck.length})`).toBe(planIdsToCheck.length);
+                    expect(actualPlanTypes.length, `Số lượng gói thực tế (${actualPlanTypes.length}) không khớp với số lượng mong đợi trong CSV (${expectedArray.length})`).toBe(expectedArray.length);
 
                     // Kiểm tra khớp tuyệt đối các phần tử (không phân biệt thứ tự)
                     const sortedActual = [...actualPlanTypes].sort();
-                    const sortedExpected = [...planIdsToCheck].map(String).sort();
-                    
+                    const sortedExpected = [...expectedArray].sort();
+
                     expect(sortedActual, `Danh sách plan_type không khớp tuyệt đối với file CSV`).toEqual(sortedExpected);
                 }
             } else {
