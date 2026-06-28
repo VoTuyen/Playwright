@@ -62,6 +62,7 @@ export async function createCMSContext({ headless = true, verify = true } = {}) 
     const browser = await chromium.launch({ headless });
     const context = await browser.newContext({
         storageState,
+        userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         viewport: { width: 1440, height: 900 },
     });
 
@@ -70,6 +71,16 @@ export async function createCMSContext({ headless = true, verify = true } = {}) 
     const originData = storageState.origins?.find(o => o.origin === origin);
 
     const page = await context.newPage();
+    
+    page.on('request', request => {
+        console.log(`[CMS Robot Req] ${request.method()} ${request.url()}`);
+    });
+    page.on('response', response => {
+        if (response.status() >= 400) {
+            console.log(`[CMS Robot Res] ${response.status()} ${response.url()}`);
+            console.log(`[CMS Robot Res Headers]`, JSON.stringify(response.headers()));
+        }
+    });
 
     if (originData?.localStorage?.length > 0) {
         // Mở trang gốc để set localStorage đúng origin
@@ -107,24 +118,29 @@ export async function createCMSContext({ headless = true, verify = true } = {}) 
  *
  * @param {string} phone - Số điện thoại của tài khoản cần ép hết hạn
  */
-export async function auto_expire_package_via_cms(phone) {
-    console.log(`[CMS Robot] Bắt đầu ép hết hạn gói cho SĐT: ${phone}`);
+export async function auto_expire_package_via_cms(phone, targetPlanId = null) {
+    console.log(`[CMS Robot] Bắt đầu ép hết hạn gói cho SĐT: ${phone}${targetPlanId ? ` (Gói: ${targetPlanId})` : ''}`);
 
-    const { browser, context, page } = await createCMSContext({ headless: true, verify: false });
+    const { browser, context, page } = await createCMSContext({ headless: false, verify: false });
 
     try {
-        await page.goto(`${CMS_BASE_URL}/home`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
+        await page.goto(`${CMS_BASE_URL}/support-cs/user-info`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
 
         // Bước 1: Vào Xử lý nghiệp vụ → tìm user
-        await page.getByRole('button', { name: 'Xử lý nghiệp vụ', exact: true }).click();
+        //await page.getByRole('button', { name: 'Xử lý nghiệp vụ', exact: true }).click();
         await page.getByRole('textbox', { name: 'Điện thoại' }).fill(phone);
         await page.getByRole('button', { name: 'Tìm' }).click();
 
         // Bước 2: Chuyển sang tab Quản lý gói dịch vụ
         await page.getByRole('tab', { name: 'Quản lý gói dịch vụ' }).click();
 
-        // Bước 3: Click vào nút Edit gói đầu tiên
-        await page.getByRole('button').filter({ hasText: 'edit' }).first().click();
+        // Bước 3: Click vào nút Edit gói
+        if (targetPlanId) {
+            const row = page.getByRole('row').filter({ hasText: targetPlanId.toString() });
+            await row.getByRole('button').filter({ hasText: 'edit' }).click();
+        } else {
+            await page.getByRole('button').filter({ hasText: 'edit' }).first().click();
+        }
 
         // Bước 4: Mở date picker và chỉnh về ngày trong quá khứ (chọn tháng trước)
         await page.getByRole('button').filter({ hasText: /^$/ }).click(); // Mở datepicker
@@ -138,7 +154,7 @@ export async function auto_expire_package_via_cms(phone) {
         await page.getByRole('button', { name: 'Lưu' }).click(); // Confirm dialog
 
         // Đợi CMS xử lý
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 10000));
 
         console.log(`[CMS Robot] ✅ Đã ép hết hạn gói thành công cho: ${phone}`);
     } catch (err) {

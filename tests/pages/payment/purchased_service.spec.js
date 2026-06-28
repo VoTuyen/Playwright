@@ -44,16 +44,17 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
         const tcId = tc['TC ID'];
         const planId = tc['Setup_PlanID'];
         const expectedAssertRaw = tc['Expected_Assert'];
-        const isExpiredScenario = tc['Test Scenario']?.toLowerCase().includes('hết hạn') || tc['Test Scenario']?.toLowerCase().includes('expired');
+        const expirePlanId = tc['Expire_PlanID'];
+        const isExpiredScenario = !!expirePlanId;
         const isEmptyScenario = tcId === 'FPTPLAY_PACKAGE_TC_001' || tcId === 'FPTPLAY_PACKAGE_TC_017';
 
         // Bỏ qua các case chưa setup Data (trừ case Empty State)
-        if (!planId && !isEmptyScenario && !isExpiredScenario) {
+        if (!planId && !isEmptyScenario && !expirePlanId) {
             return;
         }
 
         baseTest(`[${tcId}] ${tc['Test Scenario']}`, async ({ request, page }) => {
-            baseTest.setTimeout(90000); // Tăng timeout lên 90s vì có nhiều bước wait và polling
+            baseTest.setTimeout(120000); // Tăng timeout lên 120s vì có nhiều bước wait và polling
             // ==========================================
             // BƯỚC 1: PRE-CONDITION (SETUP TEST STATE)
             // ==========================================
@@ -81,8 +82,8 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
                         console.log(`-> Đang mở link thanh toán: ${paymentRes.msg_data.payment_url}`);
                         await page.goto(paymentRes.msg_data.payment_url);
                         console.log(`-> Đã mở link thanh toán bằng trình duyệt.`);
-                        console.log(`-> Đợi 5 giây để trang thanh toán xử lý...`);
-                        await new Promise(r => setTimeout(r, 5000));
+                        console.log(`-> Đợi 25 giây để trang thanh toán xử lý...`);
+                        await new Promise(r => setTimeout(r, 25000));
                     }
 
                     // 👉 THÊM DELAY GIỮA CÁC LẦN MUA
@@ -92,10 +93,10 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
                 await new Promise(r => setTimeout(r, 20000)); // Đợi DB đồng bộ gói vừa mua
             }
 
-            if (isExpiredScenario) {
-                console.log(`[Setup] 3. Kịch bản gói hết hạn -> Khởi chạy Robot CMS...`);
+            if (expirePlanId) {
+                console.log(`[Setup] 3. Phát hiện yêu cầu hết hạn gói ${expirePlanId} -> Khởi chạy Robot CMS...`);
                 // Gọi hàm Auto Click thao tác trên UI CMS
-                await auto_expire_package_via_cms(testAccount.phone);
+                await auto_expire_package_via_cms(testAccount.phone, expirePlanId);
             }
 
             // ==========================================
@@ -162,8 +163,8 @@ baseTest.describe('API /purchased_service - E2E Full Flow Data Driven', () => {
                     console.log(`[Assert] Danh sách plan_type mong đợi:`, planIdsToCheck);
 
                     // Chuẩn hóa planIdsToCheck thành Array để kiểm tra đồng bộ (hỗ trợ cả string lẻ và array)
-                    const expectedArray = Array.isArray(planIdsToCheck) 
-                        ? planIdsToCheck.map(String) 
+                    const expectedArray = Array.isArray(planIdsToCheck)
+                        ? planIdsToCheck.map(String)
                         : [String(planIdsToCheck)];
 
                     // Kiểm tra độ dài mảng phải khớp nhau
